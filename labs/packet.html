@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>XDP Packet Path — Umar Sabirin</title>
+<meta name="description" content="Visualising L4 load balancing at the XDP hook: maglev consistent hashing, conntrack, and how few flows remap when a backend dies.">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <span class="dot"></span>
+  <span class="brand">UMAR SABIRIN</span>
+  <nav>
+    <a href="../index.html">← portal</a>
+    <a href="slo.html">error budget</a>
+    <a href="packet.html" aria-current="page">xdp path</a>
+  </nav>
+</div>
+
+<div class="wrap">
+
+  <section class="hero">
+    <div class="kicker">$ xdp-lb --attach eth0 --explain</div>
+    <h1>XDP PACKET PATH</h1>
+    <div class="role">maglev consistent hashing, visualised</div>
+    <p class="blurb">
+      Packets are steered at the XDP hook — the earliest point eBPF can reach, straight after the
+      driver, before an <code>sk_buff</code> exists. Kill a backend and watch the number that matters:
+      how many <em>other</em> flows get disturbed. With plain modulo hashing it is most of them. With
+      maglev it is close to none.
+    </p>
+  </section>
+
+  <div class="sec-title">
+    <span class="bars"><i></i><i></i><i></i></span>
+    <h2>DATAPATH</h2>
+    <span>the C half — no I/O, no allocation, flat cost per packet</span>
+    <span class="rule"></span>
+  </div>
+
+  <div class="panel">
+    <canvas id="path" height="330"></canvas>
+  </div>
+
+  <div class="grid g3" style="margin-top:16px">
+
+    <div class="panel">
+      <h3>CONTROL PLANE</h3>
+      <div class="hint">the Rust half — decides, then writes a BPF map</div>
+
+      <div class="field">
+        <label>offered load <b id="v-pps">18,000 pps</b></label>
+        <input type="range" id="pps" min="1000" max="60000" step="1000" value="18000">
+      </div>
+
+      <div class="field">
+        <label>rate limit per source <b id="v-rl">40,000 pps</b></label>
+        <input type="range" id="rl" min="5000" max="60000" step="1000" value="40000">
+      </div>
+
+      <div class="field">
+        <label>hash algorithm <b id="v-alg">maglev</b></label>
+        <select id="alg">
+          <option value="maglev">maglev consistent hashing</option>
+          <option value="modulo">hash % n_backends (naive)</option>
+        </select>
+      </div>
+
+      <div class="btnrow">
+        <button id="pause">PAUSE</button>
+        <button id="newflows">CHURN FLOWS</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3>BACKENDS</h3>
+      <div class="hint">click to kill or revive — the table rebuilds</div>
+      <div id="backends" class="stages"></div>
+      <div class="btnrow" style="margin-top:14px">
+        <button id="addbe">ADD BACKEND</button>
+        <button class="danger" id="killrand">KILL RANDOM</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3>COUNTERS</h3>
+      <div class="hint">read from BPF maps, per second</div>
+      <div class="stat"><span>XDP_TX — forwarded</span><b id="c-tx" class="good">—</b></div>
+      <div class="stat"><span>XDP_DROP — rate limited</span><b id="c-drop" class="warn">—</b></div>
+      <div class="stat"><span>XDP_PASS — to kernel stack</span><b id="c-pass" class="info">—</b></div>
+      <div class="stat"><span>conntrack hit rate</span><b id="c-ct">—</b></div>
+      <div class="stat"><span>active flows</span><b id="c-flows">—</b></div>
+      <div class="stat"><span>per-packet cost</span><b id="c-cost" class="info">1 map lookup</b></div>
+    </div>
+
+  </div>
+
+  <div class="sec-title">
+    <span class="bars"><i></i><i></i><i></i></span>
+    <h2>LOOKUP TABLE</h2>
+    <span id="tblCaption">251 slots in a BPF array — the only thing the datapath reads</span>
+    <span class="rule"></span>
+  </div>
+
+  <div class="panel">
+    <canvas id="table" height="88"></canvas>
+    <div class="grid g2" style="margin-top:16px">
+      <div>
+        <div class="stat"><span>last rebuild changed</span><b id="t-changed" class="info">—</b></div>
+        <div class="stat"><span>flows forced to remap</span><b id="t-remap" class="warn">—</b></div>
+        <div class="stat"><span>flows preserved</span><b id="t-keep" class="good">—</b></div>
+      </div>
+      <div class="callout" id="tblNote">
+        Kill a backend and read <b>last rebuild changed</b>. Maglev only reassigns the slots that
+        belonged to the dead backend, so established flows on the survivors keep landing where they
+        were. Switch to naive modulo hashing and do it again — nearly every slot moves, and every
+        flow without a conntrack entry lands on a different server mid-connection.
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="grid g2">
+    <div class="panel">
+      <h3>WHY THE DATAPATH NEVER DECIDES</h3>
+      <p style="color:var(--fg-dim);font-size:12.5px">
+        Health checking, weight calculation from Prometheus, ARP resolution, drain state — all of it
+        runs in the control plane and lands in a BPF map. The datapath reads maps and nothing else.
+      </p>
+      <p style="color:var(--fg-dim);font-size:12.5px">
+        The consequence is the whole point: however elaborate the control-plane logic gets, the
+        per-packet cost stays flat. Weights that track backend CPU in real time still resolve to a
+        single array lookup.
+      </p>
+      <div class="callout">
+        <b>Weights are virtual nodes.</b> A backend with weight 3 gets three entries in the maglev
+        permutation, so it claims roughly three times the slots — without the datapath knowing what a
+        weight is.
+      </div>
+    </div>
+    <div class="panel">
+      <h3>WHAT XDP COSTS YOU</h3>
+      <table class="data">
+        <tr><th>you gain</th><th>you give up</th></tr>
+        <tr><td>no <code>sk_buff</code> allocation</td><td>no TCP state, no L7 awareness</td></tr>
+        <tr><td>no conntrack, no routing lookup</td><td>verifier limits: bounded loops, no unbounded memory</td></tr>
+        <tr><td>runs before the stack, per-core</td><td>debugging means <code>bpf_printk</code> and map dumps</td></tr>
+        <tr><td>XDP_TX returns without touching the stack</td><td>driver support varies; generic XDP is slow</td></tr>
+      </table>
+      <div class="callout">
+        Anything needing TLS termination, header routing or request-level retries belongs one layer
+        up. XDP is for the cases where the answer is a 5-tuple and a table.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <a href="../index.html">← back to portal</a> ·
+  <a href="https://github.com/umars28/xdp-lb">github.com/umars28/xdp-lb</a>
+</footer>
+
+<script>
+const M = 251;
+const COLOURS = ['#22d3ee', '#a78bfa', '#28c840', '#f0883e', '#6366f1', '#ff5f57', '#e6edf3'];
+
+let backends = [
+  { name: '10.0.3.11', weight: 2, up: true },
+  { name: '10.0.3.12', weight: 1, up: true },
+  { name: '10.0.3.13', weight: 1, up: true },
+  { name: '10.0.3.14', weight: 1, up: true },
+];
+
+let table = new Array(M).fill(-1);
+let prevTable = null;
+let conntrack = new Map();
+let flows = [];
+let packets = [];
+let paused = false;
+let lastChanged = null;
+let remapStats = null;
+let counters = { tx: 0, drop: 0, pass: 0, ctHit: 0, ctMiss: 0 };
+let rate = { tx: 0, drop: 0, pass: 0, hit: 0, total: 0 };
+let nextIp = 15;
+
+const ppsEl = document.getElementById('pps');
+const rlEl = document.getElementById('rl');
+const algEl = document.getElementById('alg');
+const pathCanvas = document.getElementById('path');
+const tableCanvas = document.getElementById('table');
+
+function fnv(str) {
+  let h = 0x811c9dc5;
+  for (let i = 0; i < str.length; i++) {
+    h ^= str.charCodeAt(i);
+    h = Math.imul(h, 0x01000193) >>> 0;
+  }
+  return h >>> 0;
+}
+
+function virtualNodes() {
+  const nodes = [];
+  backends.forEach((b, idx) => {
+    if (!b.up) return;
+    for (let v = 0; v < b.weight; v++) nodes.push({ key: b.name + '#' + v, idx });
+  });
+  return nodes;
+}
+
+function buildMaglev() {
+  const nodes = virtualNodes();
+  if (nodes.length === 0) return new Array(M).fill(-1);
+
+  const perm = nodes.map(n => {
+    const h1 = fnv(n.key);
+    const h2 = fnv(n.key + ':skip');
+    const offset = h1 % M;
+    const skip = (h2 % (M - 1)) + 1;
+    return { offset, skip, next: 0, idx: n.idx };
+  });
+
+  const entry = new Array(M).fill(-1);
+  let filled = 0;
+  let guard = 0;
+  while (filled < M && guard < M * 64) {
+    for (let i = 0; i < perm.length && filled < M; i++) {
+      const p = perm[i];
+      let c = (p.offset + p.next * p.skip) % M;
+      p.next++;
+      let inner = 0;
+      while (entry[c] !== -1 && inner < M) {
+        c = (p.offset + p.next * p.skip) % M;
+        p.next++;
+        inner++;
+      }
+      if (entry[c] === -1) {
+        entry[c] = p.idx;
+        filled++;
+      }
+    }
+    guard++;
+  }
+  return entry;
+}
+
+function buildModulo() {
+  const live = backends.map((b, i) => (b.up ? i : -1)).filter(i => i >= 0);
+  const entry = new Array(M).fill(-1);
+  if (live.length === 0) return entry;
+  for (let i = 0; i < M; i++) entry[i] = live[i % live.length];
+  return entry;
+}
+
+function rebuild(reason) {
+  prevTable = table.slice();
+  table = algEl.value === 'maglev' ? buildMaglev() : buildModulo();
+
+  let changed = 0;
+  for (let i = 0; i < M; i++) if (prevTable[i] !== table[i]) changed++;
+  lastChanged = { changed, reason };
+
+  let remapped = 0;
+  let preserved = 0;
+  for (const [key, be] of conntrack.entries()) {
+    const target = table[fnv(key) % M];
+    if (!backends[be] || !backends[be].up) {
+      conntrack.set(key, target);
+      remapped++;
+    } else if (target !== be) {
+      preserved++;
+    } else {
+      preserved++;
+    }
+  }
+  remapStats = { remapped, preserved };
+
+  document.getElementById('t-changed').textContent =
+    changed + ' / ' + M + ' slots (' + ((changed / M) * 100).toFixed(0) + '%)';
+  document.getElementById('t-remap').textContent = remapped + ' flows';
+  document.getElementById('t-keep').textContent = preserved + ' flows';
+
+  const note = document.getElementById('tblNote');
+  if (algEl.value === 'maglev') {
+    note.innerHTML = '<b>' + changed + ' of ' + M + ' slots moved.</b> Maglev reassigns essentially ' +
+      'only the slots the dead backend held; established flows on the survivors keep landing where ' +
+      'they were. Switch to naive modulo and repeat — nearly every slot moves, and every flow ' +
+      'without a conntrack entry lands on a different server mid-connection.';
+  } else {
+    note.innerHTML = '<b>' + changed + ' of ' + M + ' slots moved — with naive modulo hashing.</b> ' +
+      'Removing one backend shifts the index of every backend after it, so the mapping is rebuilt ' +
+      'wholesale. Every flow relying on the hash rather than conntrack is now on the wrong server. ' +
+      'This is the failure maglev exists to prevent.';
+  }
+
+  drawTable(true);
+  renderBackends();
+}
+
+function renderBackends() {
+  const el = document.getElementById('backends');
+  el.innerHTML = '';
+  const counts = new Array(backends.length).fill(0);
+  table.forEach(i => { if (i >= 0) counts[i]++; });
+
+  backends.forEach((b, i) => {
+    const div = document.createElement('div');
+    div.className = 'stage';
+    div.dataset.state = b.up ? 'pass' : 'fail';
+    div.style.cursor = 'pointer';
+    const share = ((counts[i] / M) * 100).toFixed(0);
+    div.innerHTML = '<span class="pip" style="background:' + (b.up ? COLOURS[i % COLOURS.length] : '#ff5f57') + '"></span>' +
+      '<span class="name">' + b.name + '</span>' +
+      '<span class="meta">w' + b.weight + ' · ' + (b.up ? share + '% of slots' : 'DOWN') + '</span>';
+    div.addEventListener('click', () => {
+      b.up = !b.up;
+      rebuild(b.up ? 'revived ' + b.name : 'killed ' + b.name);
+    });
+    el.appendChild(div);
+  });
+}
+
+function pickFlow() {
+  if (flows.length < 240 && Math.random() < 0.22) {
+    const f = '10.42.' + (1 + Math.floor(Math.random() * 250)) + '.' +
+      (1 + Math.floor(Math.random() * 250)) + ':' + (1024 + Math.floor(Math.random() * 64000));
+    flows.push(f);
+    return f;
+  }
+  if (flows.length === 0) return null;
+  return flows[Math.floor(Math.random() * flows.length)];
+}
+
+function step() {
+  const offered = parseInt(ppsEl.value, 10);
+  const limit = parseInt(rlEl.value, 10);
+  const spawn = Math.max(1, Math.round(offered / 4500));
+
+  for (let n = 0; n < spawn; n++) {
+    const flow = pickFlow();
+    if (!flow) continue;
+
+    if (Math.random() < 0.03) {
+      counters.pass++;
+      rate.pass++;
+      rate.total++;
+      packets.push({ t: 0, verdict: 'pass', be: -1, life: 1 });
+      continue;
+    }
+
+    if (offered > limit && Math.random() < (offered - limit) / offered) {
+      counters.drop++;
+      rate.drop++;
+      rate.total++;
+      packets.push({ t: 0, verdict: 'drop', be: -1, life: 1 });
+      continue;
+    }
+
+    let be;
+    if (conntrack.has(flow)) {
+      be = conntrack.get(flow);
+      counters.ctHit++;
+      rate.hit++;
+      if (!backends[be] || !backends[be].up) {
+        be = table[fnv(flow) % M];
+        conntrack.set(flow, be);
+      }
+    } else {
+      be = table[fnv(flow) % M];
+      counters.ctMiss++;
+      if (conntrack.size >= 512) {
+        conntrack.delete(conntrack.keys().next().value);
+      }
+      conntrack.set(flow, be);
+    }
+
+    if (be < 0 || !backends[be] || !backends[be].up) {
+      counters.drop++;
+      rate.drop++;
+      rate.total++;
+      packets.push({ t: 0, verdict: 'drop', be: -1, life: 1 });
+      continue;
+    }
+
+    counters.tx++;
+    rate.tx++;
+    rate.total++;
+    packets.push({ t: 0, verdict: 'tx', be, life: 1 });
+  }
+
+  if (packets.length > 700) packets.splice(0, packets.length - 700);
+}
+
+function layout() {
+  const w = pathCanvas.clientWidth;
+  const liveCount = Math.max(1, backends.length);
+  return {
+    w,
+    nic: { x: 46, y: 165, w: 74, h: 96 },
+    hook: { x: 158, y: 96, w: Math.max(220, w * 0.34), h: 138 },
+    beX: Math.min(w - 150, 158 + Math.max(220, w * 0.34) + 120),
+    beY: i => 66 + i * (200 / Math.max(1, backends.length - 1 || 1)),
+    liveCount,
+  };
+}
+
+function drawPath() {
+  const c = pathCanvas;
+  const dpr = window.devicePixelRatio || 1;
+  const w = c.clientWidth;
+  const h = 330;
+  c.width = w * dpr;
+  c.height = h * dpr;
+  const x = c.getContext('2d');
+  x.scale(dpr, dpr);
+  x.clearRect(0, 0, w, h);
+  x.font = '11px ui-monospace, monospace';
+
+  const L = layout();
+  const beSpacing = backends.length > 1 ? 210 / (backends.length - 1) : 0;
+  const beY = i => backends.length > 1 ? 62 + i * beSpacing : 160;
+
+  x.strokeStyle = '#21262d';
+  x.strokeRect(L.nic.x, L.nic.y - L.nic.h / 2, L.nic.w, L.nic.h);
+  x.fillStyle = '#8b949e';
+  x.textAlign = 'center';
+  x.fillText('NIC', L.nic.x + L.nic.w / 2, L.nic.y - 6);
+  x.fillStyle = '#6e7681';
+  x.fillText('eth0', L.nic.x + L.nic.w / 2, L.nic.y + 12);
+  x.fillText('rx queue', L.nic.x + L.nic.w / 2, L.nic.y + 28);
+
+  const hg = x.createLinearGradient(L.hook.x, 0, L.hook.x + L.hook.w, 0);
+  hg.addColorStop(0, 'rgba(34,211,238,0.10)');
+  hg.addColorStop(1, 'rgba(99,102,241,0.10)');
+  x.fillStyle = hg;
+  x.fillRect(L.hook.x, L.hook.y, L.hook.w, L.hook.h);
+  x.strokeStyle = 'rgba(34,211,238,0.45)';
+  x.strokeRect(L.hook.x, L.hook.y, L.hook.w, L.hook.h);
+  x.fillStyle = '#22d3ee';
+  x.textAlign = 'left';
+  x.fillText('XDP HOOK — datapath (C)', L.hook.x + 12, L.hook.y - 10);
+
+  const steps = ['parse eth/ip/l4', 'conntrack lookup', 'token bucket', 'maglev → NAT'];
+  steps.forEach((s, i) => {
+    const yy = L.hook.y + 26 + i * 29;
+    x.strokeStyle = '#30363d';
+    x.strokeRect(L.hook.x + 14, yy - 15, L.hook.w - 28, 23);
+    x.fillStyle = '#8b949e';
+    x.fillText(s, L.hook.x + 24, yy);
+    x.fillStyle = '#6e7681';
+    x.textAlign = 'right';
+    x.fillText(['no sk_buff', 'LRU 1M', 'per src ip', 'array read'][i], L.hook.x + L.hook.w - 24, yy);
+    x.textAlign = 'left';
+  });
+
+  backends.forEach((b, i) => {
+    const y = beY(i);
+    const col = b.up ? COLOURS[i % COLOURS.length] : '#484f58';
+    x.strokeStyle = b.up ? col : '#30363d';
+    x.fillStyle = b.up ? 'rgba(255,255,255,0.02)' : 'rgba(255,95,87,0.05)';
+    x.fillRect(L.beX, y - 17, 132, 34);
+    x.strokeRect(L.beX, y - 17, 132, 34);
+    x.fillStyle = b.up ? '#e6edf3' : '#6e7681';
+    x.textAlign = 'left';
+    x.fillText(b.name, L.beX + 10, y - 1);
+    x.fillStyle = b.up ? col : '#ff5f57';
+    x.fillText(b.up ? 'w' + b.weight + ' · healthy' : 'DOWN', L.beX + 10, y + 12);
+  });
+
+  x.strokeStyle = '#21262d';
+  x.beginPath();
+  x.moveTo(L.nic.x + L.nic.w, L.nic.y);
+  x.lineTo(L.hook.x, L.hook.y + L.hook.h / 2);
+  x.stroke();
+
+  x.fillStyle = '#6e7681';
+  x.textAlign = 'center';
+  x.fillText('XDP_PASS → kernel stack', L.hook.x + L.hook.w / 2, h - 10);
+  x.fillText('XDP_DROP', L.hook.x + L.hook.w / 2, 26);
+
+  const exitX = L.hook.x + L.hook.w;
+  packets.forEach(p => {
+    p.t += 0.022;
+    if (p.t > 1) { p.life = 0; return; }
+    const t = p.t;
+    let px, py;
+    if (t < 0.35) {
+      const k = t / 0.35;
+      px = L.nic.x + L.nic.w + k * (L.hook.x - L.nic.x - L.nic.w);
+      py = L.nic.y + k * (L.hook.y + L.hook.h / 2 - L.nic.y);
+    } else if (t < 0.62) {
+      const k = (t - 0.35) / 0.27;
+      px = L.hook.x + k * L.hook.w;
+      py = L.hook.y + L.hook.h / 2;
+    } else {
+      const k = (t - 0.62) / 0.38;
+      if (p.verdict === 'tx') {
+        px = exitX + k * (L.beX - exitX);
+        py = L.hook.y + L.hook.h / 2 + k * (beY(p.be) - L.hook.y - L.hook.h / 2);
+      } else if (p.verdict === 'pass') {
+        px = L.hook.x + L.hook.w / 2 + k * 40;
+        py = L.hook.y + L.hook.h / 2 + k * (h - 30 - L.hook.y - L.hook.h / 2);
+      } else {
+        px = L.hook.x + L.hook.w / 2 - k * 20;
+        py = L.hook.y + L.hook.h / 2 - k * (L.hook.y + L.hook.h / 2 - 34);
+      }
+    }
+    const col = p.verdict === 'tx' ? COLOURS[p.be % COLOURS.length]
+      : p.verdict === 'drop' ? '#ff5f57' : '#6e7681';
+    x.fillStyle = col;
+    x.globalAlpha = p.verdict === 'tx' ? 0.95 : 0.7;
+    x.beginPath();
+    x.arc(px, py, p.verdict === 'tx' ? 2.6 : 2, 0, Math.PI * 2);
+    x.fill();
+    x.globalAlpha = 1;
+  });
+  packets = packets.filter(p => p.life);
+}
+
+function drawTable(flash) {
+  const c = tableCanvas;
+  const dpr = window.devicePixelRatio || 1;
+  const w = c.clientWidth;
+  const h = 88;
+  c.width = w * dpr;
+  c.height = h * dpr;
+  const x = c.getContext('2d');
+  x.scale(dpr, dpr);
+  x.clearRect(0, 0, w, h);
+  x.font = '10.5px ui-monospace, monospace';
+
+  if (flash) {
+    x.fillStyle = '#e6edf3';
+    x.textAlign = 'left';
+    x.fillText('white ticks = slots that moved in the last rebuild', 0, 11);
+  }
+
+  const cw = w / M;
+  for (let i = 0; i < M; i++) {
+    const be = table[i];
+    x.fillStyle = be < 0 ? '#21262d' : COLOURS[be % COLOURS.length];
+    x.globalAlpha = be < 0 ? 1 : 0.85;
+    x.fillRect(i * cw, 26, Math.max(1, cw - 0.5), 40);
+    if (flash && prevTable && prevTable[i] !== be) {
+      x.globalAlpha = 1;
+      x.fillStyle = '#ffffff';
+      x.fillRect(i * cw, 19, Math.max(1, cw - 0.5), 4);
+    }
+    x.globalAlpha = 1;
+  }
+
+  x.fillStyle = '#6e7681';
+  x.textAlign = 'left';
+  x.fillText('slot 0', 0, 80);
+  x.textAlign = 'right';
+  x.fillText('slot ' + (M - 1), w, 80);
+  x.textAlign = 'center';
+  x.fillText(algEl.value === 'maglev' ? 'maglev permutation' : 'hash % n_backends', w / 2, 80);
+}
+
+let acc = 0;
+let lastTick = 0;
+
+function loop(ts) {
+  if (!paused) {
+    step();
+  }
+  drawPath();
+  if (ts - lastTick > 500) {
+    lastTick = ts;
+    const offered = parseInt(ppsEl.value, 10);
+    const sampled = rate.tx + rate.drop + rate.pass || 1;
+    const scale = offered / sampled;
+    document.getElementById('c-tx').textContent = Math.round(rate.tx * scale).toLocaleString('en-US') + ' pps';
+    document.getElementById('c-drop').textContent = Math.round(rate.drop * scale).toLocaleString('en-US') + ' pps';
+    document.getElementById('c-pass').textContent = Math.round(rate.pass * scale).toLocaleString('en-US') + ' pps';
+    const ctTotal = counters.ctHit + counters.ctMiss;
+    document.getElementById('c-ct').textContent =
+      ctTotal ? ((counters.ctHit / ctTotal) * 100).toFixed(1) + '%' : '—';
+    document.getElementById('c-flows').textContent = conntrack.size + ' / 512 entries';
+    rate = { tx: 0, drop: 0, pass: 0, hit: 0, total: 0 };
+  }
+  requestAnimationFrame(loop);
+}
+
+document.getElementById('v-pps').textContent = '18,000 pps';
+ppsEl.addEventListener('input', () => {
+  document.getElementById('v-pps').textContent = parseInt(ppsEl.value, 10).toLocaleString('en-US') + ' pps';
+});
+rlEl.addEventListener('input', () => {
+  document.getElementById('v-rl').textContent = parseInt(rlEl.value, 10).toLocaleString('en-US') + ' pps';
+});
+algEl.addEventListener('change', () => {
+  document.getElementById('v-alg').textContent = algEl.value === 'maglev' ? 'maglev' : 'modulo';
+  rebuild('switched algorithm');
+});
+document.getElementById('pause').addEventListener('click', e => {
+  paused = !paused;
+  e.target.textContent = paused ? 'RESUME' : 'PAUSE';
+});
+document.getElementById('newflows').addEventListener('click', () => {
+  flows = [];
+  conntrack.clear();
+  counters.ctHit = 0;
+  counters.ctMiss = 0;
+});
+document.getElementById('addbe').addEventListener('click', () => {
+  if (backends.length >= 7) return;
+  backends.push({ name: '10.0.3.' + nextIp++, weight: 1, up: true });
+  rebuild('added backend');
+});
+document.getElementById('killrand').addEventListener('click', () => {
+  const live = backends.filter(b => b.up);
+  if (live.length <= 1) return;
+  const victim = live[Math.floor(Math.random() * live.length)];
+  victim.up = false;
+  rebuild('killed ' + victim.name);
+});
+window.addEventListener('resize', () => drawTable(false));
+
+table = buildMaglev();
+prevTable = table.slice();
+renderBackends();
+drawTable(false);
+document.getElementById('t-changed').textContent = M + ' / ' + M + ' slots (initial build)';
+document.getElementById('t-remap').textContent = '0 flows';
+document.getElementById('t-keep').textContent = '0 flows';
+requestAnimationFrame(loop);
+</script>
+
+</body>
+</html>

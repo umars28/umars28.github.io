@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Umar Sabirin — DevOps · Backend · Cloud</title>
+<meta name="description" content="Umar Sabirin — DevOps, SRE, Backend and Cloud engineer. Interactive labs on delivery pipelines, error budgets and kernel-level packet routing.">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <span class="dot"></span>
+  <span class="brand">UMAR SABIRIN</span>
+  <nav>
+    <a href="#labs">labs</a>
+    <a href="#work">work</a>
+    <a href="#principles">principles</a>
+    <a href="https://github.com/umars28">github</a>
+    <a href="https://www.linkedin.com/in/umar-sabirin-5896481a5">linkedin</a>
+  </nav>
+</div>
+
+<div class="wrap">
+
+  <section class="hero">
+    <div class="kicker">$ whoami</div>
+    <h1>UMAR SABIRIN</h1>
+    <div class="role">DevOps Engineer&nbsp;&nbsp;/&nbsp;&nbsp;Platform · SRE · Cloud</div>
+    <p class="blurb">
+      I build infrastructure from bare-metal to cloud, and the services that run on it. Five years
+      from backend to platform to operations. The two labs below are the parts of that work I can
+      actually hand you to click on — error-budget maths, and a kernel-level load balancer.
+    </p>
+    <div class="chips">
+      <span class="chip on">Go</span>
+      <span class="chip on">Rust</span>
+      <span class="chip">Terraform</span>
+      <span class="chip">Ansible</span>
+      <span class="chip">Kubernetes</span>
+      <span class="chip">Proxmox / QEMU</span>
+      <span class="chip">Prometheus / Grafana</span>
+      <span class="chip">eBPF / XDP</span>
+      <span class="chip on">GMT+7 · available for work</span>
+    </div>
+  </section>
+
+  <div class="sec-title" id="labs">
+    <span class="bars"><i></i><i></i><i></i></span>
+    <h2>LABS</h2>
+    <span>interactive · runs entirely in your browser</span>
+    <span class="rule"></span>
+  </div>
+
+  <div class="grid g3">
+
+    <a class="card" href="labs/slo.html" style="--accent: var(--violet)">
+      <span class="glyph">S</span>
+      <h3>ERROR BUDGET LAB</h3>
+      <div class="kick">what an SLO actually costs you</div>
+      <ul>
+        <li>budget in requests, and in minutes of downtime</li>
+        <li>multi-window multi-burn-rate alert thresholds</li>
+        <li>time-to-exhaustion at the current error rate</li>
+      </ul>
+      <div class="cta">OPEN LAB →</div>
+    </a>
+
+    <a class="card" href="labs/packet.html" style="--accent: var(--indigo)">
+      <span class="glyph">X</span>
+      <h3>XDP PACKET PATH</h3>
+      <div class="kick">maglev hashing, visualised</div>
+      <ul>
+        <li>packets routed at the XDP hook, before the network stack</li>
+        <li>drop a backend and count how many flows actually remap</li>
+        <li>conntrack hits versus fresh hash lookups</li>
+      </ul>
+      <div class="cta">OPEN LAB →</div>
+    </a>
+
+  </div>
+
+  <div class="sec-title" id="work">
+    <span class="bars"><i></i><i></i><i></i></span>
+    <h2>SELECTED WORK</h2>
+    <span>written to understand the layer, not to replace it</span>
+    <span class="rule"></span>
+  </div>
+
+  <div class="grid g2">
+
+    <a class="card" href="https://github.com/umars28/mars-container-runtime" style="--accent: var(--orange)">
+      <span class="glyph">R</span>
+      <h3>mars-container-runtime</h3>
+      <div class="kick">Rust · OCI runtime from scratch</div>
+      <ul>
+        <li>namespaces, cgroup v2, OverlayFS, capabilities, seccomp</li>
+        <li>26 OCI validation cases pass — runc 1.5.1 passes 22 on the same host</li>
+        <li>drop-in for Docker: <code>docker run --runtime=mars</code></li>
+        <li>nine production failure modes reproduced with kernel-level evidence</li>
+      </ul>
+      <div class="cta">VIEW REPO →</div>
+    </a>
+
+    <a class="card" href="https://github.com/umars28/xdp-lb" style="--accent: var(--green)">
+      <span class="glyph">L</span>
+      <h3>xdp-lb</h3>
+      <div class="kick">C datapath · Rust control plane</div>
+      <ul>
+        <li>L4 load balancing on the XDP hook, before <code>sk_buff</code> allocation</li>
+        <li>maglev consistent hashing, weighted, with drain support</li>
+        <li>bidirectional LRU conntrack, one million entries</li>
+        <li>per-packet cost stays flat however complex the control plane gets</li>
+      </ul>
+      <div class="cta">VIEW REPO →</div>
+    </a>
+
+  </div>
+
+  <div class="callout">
+    <b>On what is public.</b> The repos above are side-projects I can show. The production
+    infrastructure work — VM orchestration straight over QEMU/QMP, a self-service LBaaS on HAProxy
+    and nftables, CIS/STIG baked into image builds — lives in company repos. Happy to walk through
+    any of it in a call.
+  </div>
+
+  <div class="sec-title" id="principles">
+    <span class="bars"><i></i><i></i><i></i></span>
+    <h2>OPERATING PRINCIPLES</h2>
+    <span>what I will argue about</span>
+    <span class="rule"></span>
+  </div>
+
+  <div class="grid g2">
+    <div class="panel">
+      <h3>IF IT ISN'T IN TERRAFORM, IT DOESN'T EXIST</h3>
+      <div class="hint">Clicking in a console is a one-off. The repo is the source of truth.</div>
+      <h3>HARDENING BELONGS IN THE BUILD</h3>
+      <div class="hint">Golden images ship CIS/STIG-benchmarked and scanned, or they don't ship.</div>
+      <h3>COST IS A CI METRIC</h3>
+      <div class="hint">The pipeline flags the bill before anything gets provisioned — not at month end.</div>
+    </div>
+    <div class="panel">
+      <h3>AN UNACTIONABLE ALERT IS NOISE</h3>
+      <div class="hint">Every page maps to a runbook, or it gets deleted. Deleting alerts is work.</div>
+      <h3>FAIL FAST, FAIL LOUD</h3>
+      <div class="hint">Slow feedback costs more than a red build ever will.</div>
+      <h3>AI NARROWS THE SEARCH SPACE</h3>
+      <div class="hint">It does not get merge rights. A human still signs off.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="grid g3">
+    <a class="card" href="https://github.com/umars28/umars28/blob/main/docs/PROJECTS.md" style="--accent: var(--cyan)">
+      <span class="glyph">P</span>
+      <h3>PROJECTS</h3>
+      <div class="kick">what each repo taught me</div>
+      <div class="cta">READ →</div>
+    </a>
+    <a class="card" href="https://github.com/umars28/umars28/blob/main/docs/STACK.md" style="--accent: var(--violet)">
+      <span class="glyph">S</span>
+      <h3>STACK</h3>
+      <div class="kick">full inventory, plus honest edges</div>
+      <div class="cta">READ →</div>
+    </a>
+    <a class="card" href="mailto:umarsabirin369@gmail.com" style="--accent: var(--green)">
+      <span class="glyph">@</span>
+      <h3>CONTACT</h3>
+      <div class="kick">open to devops · sre · platform roles</div>
+      <div class="cta">EMAIL →</div>
+    </a>
+  </div>
+
+</div>
+
+<footer>
+  B.Sc. Information Systems — Hasanuddin University · GPA 3.82 / 4.00<br>
+  <a href="https://github.com/umars28">github.com/umars28</a> ·
+  <a href="https://www.linkedin.com/in/umar-sabirin-5896481a5">linkedin</a> ·
+  <a href="mailto:umarsabirin369@gmail.com">umarsabirin369@gmail.com</a>
+</footer>
+
+</body>
+</html>
