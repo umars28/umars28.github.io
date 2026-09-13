@@ -18,7 +18,7 @@
   --sans:"Plus Jakarta Sans",Helvetica,Arial,sans-serif;
   --mono:"JetBrains Mono",ui-monospace,monospace;
   --gutter:clamp(1.5rem,4vw,3.5rem); --ease:cubic-bezier(.16,.84,.24,1);
-  --sec:clamp(3.5rem,9vh,6.5rem);
+  --sec:clamp(2.4rem,5.5vh,4rem);
 }
 html{scroll-behavior:smooth}
 body{background:#ECE7F6;color:var(--ink);font-family:var(--sans);font-size:.9375rem;line-height:1.55;-webkit-font-smoothing:antialiased}
@@ -104,35 +104,45 @@ img[data-avatar].is-speaking{animation-duration:2.4s}
 
 .panel{background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.9);border-radius:clamp(16px,2vw,26px);
   box-shadow:0 18px 50px rgba(80,40,160,.08);backdrop-filter:blur(14px);
-  padding:clamp(1.5rem,3.5vw,3rem);margin-top:clamp(2rem,5vh,3.25rem)}
+  padding:clamp(1.25rem,2.6vw,2.1rem);margin-top:clamp(1.5rem,3.5vh,2.25rem)}
 
 .xp{display:grid;gap:0}
-.xp>li{list-style:none;display:grid;grid-template-columns:minmax(0,220px) minmax(0,1fr);
-  gap:clamp(1rem,3vw,3rem);padding-block:clamp(1.5rem,3vh,2.25rem);border-top:1px solid var(--line)}
-.xp>li:first-child{border-top:0;padding-top:0}
-.xp .when{display:flex;flex-direction:column;gap:.45rem}
-.xp .when .p{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;color:var(--violet);font-weight:500}
-.xp .when .c{font-weight:700;font-size:1.02rem;letter-spacing:-.02em}
-.xp .when .l{font-size:.8rem;color:var(--muted)}
-.xp h3{font-size:1.2rem;font-weight:700;letter-spacing:-.025em}
-.xp ul{margin-top:.85rem;display:grid;gap:.6rem;padding-left:0}
-.xp ul li{list-style:none;position:relative;padding-left:1.4rem;color:var(--ink2);line-height:1.62;max-width:62ch}
-.xp ul li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:7px;border-radius:99px;background-image:var(--grad)}
-.xp h3 .gpa{font-family:var(--mono);font-size:.7rem;font-weight:500;letter-spacing:.04em;color:var(--muted);
-  border:1px solid var(--line2);border-radius:999px;padding:.2rem .6rem;margin-left:.6rem;white-space:nowrap}
-.xp h3 .gpa--l{color:var(--violet);border-color:rgba(123,63,228,.32)}
-.xp h3 .gpa--l:hover{background:rgba(123,63,228,.1)}
-.xp ul.stk{margin-top:.8rem;display:flex;flex-wrap:wrap;gap:.35rem}
-.xp ul.stk li{padding:.2rem .6rem;max-width:none;background:rgba(123,63,228,.07);border-radius:7px;
-  font-family:var(--mono);font-size:.68rem;color:var(--ink2);line-height:1.5}
+.xp>li{list-style:none;border-top:1px solid var(--line)}
+.xp>li:first-child{border-top:0}
+.xp summary{cursor:pointer;list-style:none;display:flex;flex-wrap:wrap;align-items:baseline;
+  gap:.3rem 1.1rem;padding-block:.95rem;border-radius:10px;transition:background .2s var(--ease)}
+.xp summary::-webkit-details-marker{display:none}
+.xp summary:hover{background:rgba(123,63,228,.05)}
+.xp summary:hover .c{color:var(--violet)}
+.xp .p{flex:0 0 138px;font-family:var(--mono);font-size:.72rem;letter-spacing:.04em;color:var(--violet)}
+.xp .c{flex:1 1 210px;font-weight:700;font-size:1rem;letter-spacing:-.02em;transition:color .2s}
+.xp .l{flex:1 1 240px;font-size:.83rem;color:var(--muted)}
+.xp .chev{margin-left:auto;width:22px;height:22px;flex:none;display:grid;place-items:center;
+  border-radius:7px;background:rgba(123,63,228,.09);color:var(--violet);font-size:.85rem;line-height:1;
+  transition:transform .3s var(--ease)}
+.xp details[open] .chev{transform:rotate(45deg)}
+.xp .body{padding:.35rem 0 1.35rem}
+.xp ul{display:grid;gap:.55rem;padding-left:0}
+.xp ul li{list-style:none;position:relative;padding-left:1.4rem;color:var(--ink2);line-height:1.6;
+  font-size:.9rem;max-width:74ch}
+.xp ul li::before{content:"";position:absolute;left:0;top:.6em;width:6px;height:6px;border-radius:99px;background-image:var(--grad)}
+.xp .gpa{font-family:var(--mono);font-size:.68rem;font-weight:500;letter-spacing:.04em;color:var(--muted);
+  border:1px solid var(--line2);border-radius:999px;padding:.18rem .55rem;white-space:nowrap}
+.xp .gpa--l{color:var(--violet);border-color:rgba(123,63,228,.32)}
+.xp .gpa--l:hover{background:rgba(123,63,228,.1)}
+.xp ul.stk{margin-bottom:.9rem;display:flex;flex-wrap:wrap;gap:.3rem}
+.xp ul.stk li{padding:.18rem .55rem;max-width:none;background:rgba(123,63,228,.07);border-radius:6px;
+  font-family:var(--mono);font-size:.66rem;color:var(--ink2);line-height:1.5}
 .xp ul.stk li::before{display:none}
-@media(max-width:760px){.xp>li{grid-template-columns:1fr;gap:.9rem}}
+@media(max-width:680px){.xp .p{flex-basis:100%}.xp .l{flex-basis:100%}}
 
-.skl{margin-top:clamp(2rem,5vh,3.25rem);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:clamp(1.25rem,2.5vw,2rem) clamp(1.5rem,4vw,3.5rem)}
-@media(max-width:760px){.skl{grid-template-columns:1fr}}
-.skl>div{border-top:1px solid var(--line2);padding-top:.9rem}
-.skl>div>span{display:block;margin-bottom:.7rem}
+.skl{margin-top:clamp(1.75rem,4vh,2.5rem);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:1.35rem clamp(1.5rem,3.5vw,3rem)}
+@media(max-width:900px){.skl{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.skl{grid-template-columns:1fr}}
+.skl>div{border-top:1px solid var(--line2);padding-top:.7rem}
+.skl>div>span{display:block;margin-bottom:.35rem}
+.skl p{font-size:.86rem;line-height:1.6;color:var(--ink2)}
 
 .arch{margin-top:clamp(2rem,4vh,2.75rem)}
 .arch>span{display:block;margin-bottom:1rem}
@@ -147,13 +157,7 @@ img[data-avatar].is-speaking{animation-duration:2.4s}
 .arch a:hover{text-decoration:underline}
 @media(max-width:820px){.arch li{grid-template-columns:1fr;gap:.3rem}.arch .s--q,.arch a{text-align:left}}
 
-.pills{display:flex;flex-wrap:wrap;gap:.45rem}
-.pills li{list-style:none;background:rgba(255,255,255,.85);border:1px solid rgba(255,255,255,.95);
-  border-radius:999px;padding:.42rem .95rem;font-size:.86rem;font-weight:600;
-  box-shadow:0 3px 10px rgba(80,40,160,.06);transition:transform .2s var(--ease),color .2s}
-.pills li:hover{transform:translateY(-2px);color:var(--violet)}
-
-.roles{margin-top:clamp(2rem,5vh,3.25rem);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+.roles{margin-top:clamp(1.75rem,4vh,2.5rem);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
   gap:clamp(1rem,2vw,1.25rem)}
 @media(max-width:1080px){.roles{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.roles{grid-template-columns:1fr}}
@@ -269,93 +273,93 @@ img[data-avatar].is-speaking{animation-duration:2.4s}
 
   <div class="panel">
     <ol class="xp">
-      <li>
-        <div class="when">
+      <li><details open>
+        <summary>
           <span class="p">Mar 2026 — Present</span>
-          <span class="c">Apple Developer Institute for DevOps × S-Quantum Engine</span>
-          <span class="l">Tangerang, ID</span>
-        </div>
-        <div>
-          <h3>DevOps Engineer</h3>
+          <span class="c">DevOps Engineer</span>
+          <span class="l">Apple Developer Institute for DevOps × S-Quantum Engine · Tangerang, ID</span>
+          <span class="chev">+</span>
+        </summary>
+        <div class="body">
           <ul>
-            <li>Infrastructure pipeline automation using Jenkins, Terraform IaC, and Ansible with security checkpoints.</li>
-            <li>Achieved significant pipeline acceleration through parallelization and dependency optimization.</li>
-            <li>Cost analysis integration for infrastructure changes.</li>
-            <li>Hardened VM image creation with security benchmarks and vulnerability scanning.</li>
-            <li>Observability platform with automated alerting and AI-driven diagnostics.</li>
-            <li>Multi-platform Kubernetes deployments, self-managed and EKS.</li>
-            <li>Zero-downtime cluster management strategies.</li>
+    <li>Infrastructure pipeline automation using Jenkins, Terraform IaC, and Ansible with security checkpoints.</li>
+    <li>Achieved significant pipeline acceleration through parallelization and dependency optimization.</li>
+    <li>Cost analysis integration for infrastructure changes.</li>
+    <li>Hardened VM image creation with security benchmarks and vulnerability scanning.</li>
+    <li>Observability platform with automated alerting and AI-driven diagnostics.</li>
+    <li>Multi-platform Kubernetes deployments, self-managed and EKS.</li>
+    <li>Zero-downtime cluster management strategies.</li>
           </ul>
         </div>
-      </li>
-      <li>
-        <div class="when">
+      </details></li>
+      <li><details>
+        <summary>
           <span class="p">Jul 2025 — Mar 2026</span>
-          <span class="c">Maxcloud (PT Awan Data Indonesia)</span>
-          <span class="l">Bekasi, ID</span>
-        </div>
-        <div>
-          <h3>Platform Engineer</h3>
+          <span class="c">Platform Engineer</span>
+          <span class="l">Maxcloud (PT Awan Data Indonesia) · Bekasi, ID</span>
+          <span class="chev">+</span>
+        </summary>
+        <div class="body">
           <ul>
-            <li>High-concurrency gRPC/SSE stream multiplexing engine.</li>
-            <li>VM orchestration with significant performance improvements.</li>
-            <li>Payment system reliability via multi-gateway architecture.</li>
-            <li>Enterprise configuration system reducing deployment times.</li>
-            <li>Self-service load-balancing infrastructure.</li>
-            <li>Comprehensive testing across payment, streaming, and virtualization systems.</li>
+    <li>High-concurrency gRPC/SSE stream multiplexing engine.</li>
+    <li>VM orchestration with significant performance improvements.</li>
+    <li>Payment system reliability via multi-gateway architecture.</li>
+    <li>Enterprise configuration system reducing deployment times.</li>
+    <li>Self-service load-balancing infrastructure.</li>
+    <li>Comprehensive testing across payment, streaming, and virtualization systems.</li>
           </ul>
         </div>
-      </li>
-      <li>
-        <div class="when">
+      </details></li>
+      <li><details>
+        <summary>
           <span class="p">Mar 2023 — Jun 2025</span>
-          <span class="c">Freelance / Self-Employed</span>
-          <span class="l">Remote</span>
-        </div>
-        <div>
-          <h3>Software Engineer</h3>
+          <span class="c">Software Engineer</span>
+          <span class="l">Freelance / Self-Employed · Remote</span>
+          <span class="chev">+</span>
+        </summary>
+        <div class="body">
           <ul>
-            <li>Message queue performance analysis and optimization.</li>
-            <li>Microservices architecture with real-time communication capabilities.</li>
-            <li>API security implementation with authentication and caching.</li>
-            <li>Government research platform architecture.</li>
-            <li>Domain-specific platforms across maritime, retail, and education sectors.</li>
+    <li>Message queue performance analysis and optimization.</li>
+    <li>Microservices architecture with real-time communication capabilities.</li>
+    <li>API security implementation with authentication and caching.</li>
+    <li>Government research platform architecture.</li>
+    <li>Domain-specific platforms across maritime, retail, and education sectors.</li>
           </ul>
         </div>
-      </li>
-      <li>
-        <div class="when">
+      </details></li>
+      <li><details>
+        <summary>
           <span class="p">Jun 2021 — Feb 2023</span>
-          <span class="c">Fairtech Pte Ltd</span>
-          <span class="l">Makassar, ID</span>
-        </div>
-        <div>
-          <h3>Software Developer</h3>
+          <span class="c">Software Developer</span>
+          <span class="l">Fairtech Pte Ltd · Makassar, ID</span>
+          <span class="chev">+</span>
+        </summary>
+        <div class="body">
           <ul>
-            <li>Database optimization for multi-tenant environments.</li>
-            <li>Regional business logic implementation across Southeast Asia.</li>
-            <li>Third-party shipping integration.</li>
-            <li>Video conferencing platform integration.</li>
-            <li>Search functionality implementation.</li>
+    <li>Database optimization for multi-tenant environments.</li>
+    <li>Regional business logic implementation across Southeast Asia.</li>
+    <li>Third-party shipping integration.</li>
+    <li>Video conferencing platform integration.</li>
+    <li>Search functionality implementation.</li>
           </ul>
         </div>
-      </li>
-      <li>
-        <div class="when">
+      </details></li>
+      <li><details>
+        <summary>
           <span class="p">Mar 2021 — Jun 2021</span>
-          <span class="c">Fairtech Pte Ltd</span>
-          <span class="l">Makassar, ID</span>
-        </div>
-        <div>
-          <h3>Software Developer Intern</h3>
+          <span class="c">Software Developer Intern</span>
+          <span class="l">Fairtech Pte Ltd · Makassar, ID</span>
+          <span class="chev">+</span>
+        </summary>
+        <div class="body">
           <ul>
-            <li>Content management interface development.</li>
-            <li>Security validation improvements.</li>
-            <li>Internal tracking systems.</li>
-            <li>Database design enhancements.</li>
+    <li>Content management interface development.</li>
+    <li>Security validation improvements.</li>
+    <li>Internal tracking systems.</li>
+    <li>Database design enhancements.</li>
           </ul>
         </div>
-      </li>
+      </details></li>
     </ol>
   </div>
 </div></section>
@@ -367,52 +371,55 @@ img[data-avatar].is-speaking{animation-duration:2.4s}
 
   <div class="panel">
     <ol class="xp">
-      <li>
-        <div class="when">
+      <li><details open>
+        <summary>
           <span class="p">Aug 2020 — Feb 2025</span>
-          <span class="c">Hasanuddin University</span>
-          <span class="l">Makassar, ID</span>
-        </div>
-        <div>
-          <h3>Bachelor of Information Systems <span class="gpa">GPA 3.82 / 4.00</span></h3>
+          <span class="c">Bachelor of Information Systems</span>
+          <span class="l">Hasanuddin University · Makassar, ID</span>
+          <span class="gpa">GPA 3.82 / 4.00</span>
+          <span class="chev">+</span>
+        </summary>
+        <div class="body">
           <ul>
-            <li>Relevant coursework: Data Structures, Algorithms, Database Management, Web Development, Software Engineering.</li>
-            <li>Thesis: "Analysis and Design of a Web-Based Student Management Information System Using the Design Thinking Method" — a case study at the Pondok Informatika Education Foundation.</li>
-            <li>Laboratory assistant in Basic Programming and Web Development.</li>
+    <li>Relevant coursework: Data Structures, Algorithms, Database Management, Web Development, Software Engineering.</li>
+    <li>Thesis: "Analysis and Design of a Web-Based Student Management Information System Using the Design Thinking Method" — a case study at the Pondok Informatika Education Foundation.</li>
+    <li>Laboratory assistant in Basic Programming and Web Development.</li>
           </ul>
         </div>
-      </li>
-      <li>
-        <div class="when">
+      </details></li>
+      <li><details>
+        <summary>
           <span class="p">Aug 2022 — Dec 2022</span>
-          <span class="c">Hasanuddin University</span>
-          <span class="l">Makassar, ID</span>
-        </div>
-        <div>
-          <h3>Teaching Assistant, Web Programming <span class="gpa">200+ students</span></h3>
+          <span class="c">Teaching Assistant, Web Programming</span>
+          <span class="l">Hasanuddin University · Makassar, ID</span>
+          <span class="gpa">200+ students</span>
+          <span class="chev">+</span>
+        </summary>
+        <div class="body">
           <ul>
-            <li>Mentored students through Web Programming and Basic Programming courses.</li>
-            <li>Guided third-year Information Systems students in Web Programming, and first-year students in Basic Programming.</li>
-            <li>Ran teaching sessions, gave guidance, and marked assignments.</li>
-            <li>Developed and organised course materials.</li>
+    <li>Mentored students through Web Programming and Basic Programming courses.</li>
+    <li>Guided third-year Information Systems students in Web Programming, and first-year students in Basic Programming.</li>
+    <li>Ran teaching sessions, gave guidance, and marked assignments.</li>
+    <li>Developed and organised course materials.</li>
           </ul>
         </div>
-      </li>
-      <li>
-        <div class="when">
+      </details></li>
+      <li><details>
+        <summary>
           <span class="p">Feb 2023 — Jun 2023</span>
-          <span class="c">Independent Study (MSIB) Kampus Merdeka</span>
-          <span class="l">PT Cipta Konsultan Internasional</span>
-        </div>
-        <div>
-          <h3>Metaverse Asset Creation <span class="gpa">20 credits</span></h3>
+          <span class="c">Metaverse Asset Creation</span>
+          <span class="l">Independent Study (MSIB) Kampus Merdeka · PT Cipta Konsultan Internasional</span>
+          <span class="gpa">20 credits</span>
+          <span class="chev">+</span>
+        </summary>
+        <div class="body">
           <ul>
-            <li>Coursework: Metaverse Asset Creation, Commercialization, Corporate Innovation, 3D Digital Asset Creation, Metaverse Design, Roblox Game Design and Coding.</li>
-            <li>Led the team, created 3D digital assets, designed the metaverse environment, and coded the Roblox game.</li>
-            <li>Final project in collaboration with Corporate Innovation Asia (CIAS) and WIR Group.</li>
+    <li>Coursework: Metaverse Asset Creation, Commercialization, Corporate Innovation, 3D Digital Asset Creation, Metaverse Design, Roblox Game Design and Coding.</li>
+    <li>Led the team, created 3D digital assets, designed the metaverse environment, and coded the Roblox game.</li>
+    <li>Final project in collaboration with Corporate Innovation Asia (CIAS) and WIR Group.</li>
           </ul>
         </div>
-      </li>
+      </details></li>
     </ol>
   </div>
 </div></section>
@@ -423,18 +430,18 @@ img[data-avatar].is-speaking{animation-duration:2.4s}
   </div>
 
   <div class="skl">
-    <div><span class="micro">Languages</span><ul class="pills"><li>Go</li><li>PHP (Laravel)</li><li>Java (Spring Boot)</li><li>Groovy</li><li>Bash</li></ul></div>
-    <div><span class="micro">Architecture</span><ul class="pills"><li>Microservices</li><li>Event-Driven</li><li>gRPC</li><li>REST</li><li>WebSocket</li></ul></div>
-    <div><span class="micro">AI &amp; ML</span><ul class="pills"><li>AWS Bedrock</li><li>Anthropic APIs</li><li>LLM integration</li><li>Prompt optimization</li></ul></div>
-    <div><span class="micro">Data systems</span><ul class="pills"><li>PostgreSQL</li><li>MySQL</li><li>MongoDB</li><li>Redis</li><li>Elasticsearch</li><li>Kafka</li><li>RabbitMQ</li><li>SQS</li></ul></div>
-    <div><span class="micro">Cloud services</span><ul class="pills"><li>AWS EC2</li><li>EKS</li><li>S3</li><li>RDS</li><li>IAM</li><li>VPC</li></ul></div>
-    <div><span class="micro">Containers</span><ul class="pills"><li>Docker</li><li>Kubernetes</li><li>Amazon EKS</li></ul></div>
-    <div><span class="micro">Infrastructure automation</span><ul class="pills"><li>Terraform</li><li>Ansible</li></ul></div>
-    <div><span class="micro">Pipelines</span><ul class="pills"><li>GitHub Actions</li><li>GitLab CI</li><li>Bitbucket</li><li>Jenkins</li></ul></div>
-    <div><span class="micro">Observability</span><ul class="pills"><li>Prometheus</li><li>Grafana</li><li>Loki</li><li>Tempo</li><li>Mimir</li><li>Pyroscope</li><li>ELK</li><li>OpenTelemetry</li></ul></div>
-    <div><span class="micro">Security</span><ul class="pills"><li>Hardening frameworks</li><li>Static analysis</li><li>Dynamic analysis</li><li>Secret management</li><li>Policy-as-code</li><li>RBAC</li><li>Encryption</li></ul></div>
-    <div><span class="micro">Systems</span><ul class="pills"><li>Linux</li><li>Proxmox</li><li>QEMU/KVM</li><li>LXC/LXD</li><li>ZFS</li></ul></div>
-    <div><span class="micro">Network</span><ul class="pills"><li>nftables</li><li>OpenVPN</li><li>DNS</li><li>IPv6</li><li>Nginx</li><li>HAProxy</li></ul></div>
+    <div><span class="micro">Languages</span><p>Go · PHP (Laravel) · Java (Spring Boot) · Groovy · Bash</p></div>
+    <div><span class="micro">Architecture</span><p>Microservices · Event-Driven · gRPC · REST · WebSocket</p></div>
+    <div><span class="micro">AI &amp; ML</span><p>AWS Bedrock · Anthropic APIs · LLM integration · Prompt optimization</p></div>
+    <div><span class="micro">Data systems</span><p>PostgreSQL · MySQL · MongoDB · Redis · Elasticsearch · Kafka · RabbitMQ · SQS</p></div>
+    <div><span class="micro">Cloud services</span><p>AWS EC2 · EKS · S3 · RDS · IAM · VPC</p></div>
+    <div><span class="micro">Containers</span><p>Docker · Kubernetes · Amazon EKS</p></div>
+    <div><span class="micro">Infrastructure automation</span><p>Terraform · Ansible</p></div>
+    <div><span class="micro">Pipelines</span><p>GitHub Actions · GitLab CI · Bitbucket · Jenkins</p></div>
+    <div><span class="micro">Observability</span><p>Prometheus · Grafana · Loki · Tempo · Mimir · Pyroscope · ELK · OpenTelemetry</p></div>
+    <div><span class="micro">Security</span><p>Hardening frameworks · Static analysis · Dynamic analysis · Secret management · Policy-as-code · RBAC · Encryption</p></div>
+    <div><span class="micro">Systems</span><p>Linux · Proxmox · QEMU/KVM · LXC/LXD · ZFS</p></div>
+    <div><span class="micro">Network</span><p>nftables · OpenVPN · DNS · IPv6 · Nginx · HAProxy</p></div>
   </div>
 </div></section>
 
@@ -449,124 +456,130 @@ img[data-avatar].is-speaking{animation-duration:2.4s}
 
   <div class="panel">
     <ol class="xp">
-      <li>
-        <div class="when">
+      <li><details open>
+        <summary>
           <span class="p">Oct — Dec 2025</span>
-          <span class="c">Frog Cloud</span>
-          <span class="l">Private cloud infrastructure</span>
-        </div>
-        <div>
-          <h3>Frogve orchestration platform <span class="gpa">Confidential</span></h3>
+          <span class="c">Frogve orchestration platform</span>
+          <span class="l">Frog Cloud · Private cloud infrastructure</span>
+          <span class="gpa">Confidential</span>
+          <span class="chev">+</span>
+        </summary>
+        <div class="body">
           <ul class="stk"><li>Go</li><li>Echo</li><li>SQLite</li><li>QEMU/KVM</li><li>Cloud-Init</li><li>nftables</li><li>OpenVPN</li><li>Kea DHCP</li><li>WebSocket</li><li>Docker</li></ul>
           <ul>
-            <li>Built a private cloud orchestration platform managing the full lifecycle of virtual machines, networking and storage.</li>
-            <li>Wrote a custom hypervisor manager in Go interfacing directly with QEMU/KVM, for bare-metal performance without heavy middleware.</li>
-            <li>Implemented a software-defined networking layer on nftables and Linux bridges, giving isolated VPCs with dynamic NAT, firewall rules and DHCP reservation.</li>
-            <li>Designed a multi-tenant project architecture with strict CPU, RAM and disk quotas, and role-based access control.</li>
-            <li>Integrated automated OpenVPN provisioning for secure access to private cloud resources by distributed teams.</li>
-            <li>Developed real-time monitoring and interactive VNC console access over WebSockets.</li>
-            <li>Automated provisioning with cloud-init for instant VM configuration and password management.</li>
+    <li>Built a private cloud orchestration platform managing the full lifecycle of virtual machines, networking and storage.</li>
+    <li>Wrote a custom hypervisor manager in Go interfacing directly with QEMU/KVM, for bare-metal performance without heavy middleware.</li>
+    <li>Implemented a software-defined networking layer on nftables and Linux bridges, giving isolated VPCs with dynamic NAT, firewall rules and DHCP reservation.</li>
+    <li>Designed a multi-tenant project architecture with strict CPU, RAM and disk quotas, and role-based access control.</li>
+    <li>Integrated automated OpenVPN provisioning for secure access to private cloud resources by distributed teams.</li>
+    <li>Developed real-time monitoring and interactive VNC console access over WebSockets.</li>
+    <li>Automated provisioning with cloud-init for instant VM configuration and password management.</li>
           </ul>
         </div>
-      </li>
-      <li>
-        <div class="when">
+      </details></li>
+      <li><details>
+        <summary>
           <span class="p">Jul 2025 — Now</span>
-          <span class="c">Maxcloud</span>
-          <span class="l">Public cloud platform</span>
-        </div>
-        <div>
-          <h3>Public cloud management platform <a class="gpa gpa--l" href="https://maxcloud.id/">maxcloud.id ↗</a></h3>
+          <span class="c">Public cloud management platform</span>
+          <span class="l">Maxcloud · Public cloud platform</span>
+          <a class="gpa gpa--l" href="https://maxcloud.id/">maxcloud.id ↗</a>
+          <span class="chev">+</span>
+        </summary>
+        <div class="body">
           <ul class="stk"><li>Laravel 10</li><li>PHP 8</li><li>MySQL</li><li>Redis</li><li>RabbitMQ</li><li>Laravel Reverb</li><li>Proxmox API</li><li>PowerDNS</li><li>Xendit</li><li>Duitku</li><li>Docker</li><li>Sentry</li><li>JWT</li></ul>
           <ul>
-            <li>Built an end-to-end platform automating the provisioning and billing of virtual infrastructure.</li>
-            <li>High-performance REST API on Laravel 10 using a service-repository pattern and Laravel Actions for modular domain logic.</li>
-            <li>Engineered a node allocation algorithm optimising CPU and RAM placement across Proxmox clusters for balanced load and high availability.</li>
-            <li>Automated IPv6 provisioning via SLAAC and integrated PowerDNS for real-time domain management and load balancer configuration.</li>
-            <li>Designed a modular payment gateway abstraction able to hot-swap providers, handle callbacks and reconcile transactions automatically.</li>
-            <li>Built a reactive notification system on Redis atomic counters for precise usage tracking, plus a Telegram bot for instant alerts.</li>
-            <li>Secured access with JWT and Google 2FA, and wired Sentry for error tracking and performance monitoring.</li>
+    <li>Built an end-to-end platform automating the provisioning and billing of virtual infrastructure.</li>
+    <li>High-performance REST API on Laravel 10 using a service-repository pattern and Laravel Actions for modular domain logic.</li>
+    <li>Engineered a node allocation algorithm optimising CPU and RAM placement across Proxmox clusters for balanced load and high availability.</li>
+    <li>Automated IPv6 provisioning via SLAAC and integrated PowerDNS for real-time domain management and load balancer configuration.</li>
+    <li>Designed a modular payment gateway abstraction able to hot-swap providers, handle callbacks and reconcile transactions automatically.</li>
+    <li>Built a reactive notification system on Redis atomic counters for precise usage tracking, plus a Telegram bot for instant alerts.</li>
+    <li>Secured access with JWT and Google 2FA, and wired Sentry for error tracking and performance monitoring.</li>
           </ul>
         </div>
-      </li>
-      <li>
-        <div class="when">
+      </details></li>
+      <li><details>
+        <summary>
           <span class="p">Jan 2026</span>
-          <span class="c">Pingve</span>
-          <span class="l">Distributed network monitoring</span>
-        </div>
-        <div>
-          <h3>Control plane / data plane monitoring <span class="gpa">Private</span></h3>
+          <span class="c">Control plane / data plane monitoring</span>
+          <span class="l">Pingve · Distributed network monitoring</span>
+          <span class="gpa">Private</span>
+          <span class="chev">+</span>
+        </summary>
+        <div class="body">
           <ul class="stk"><li>Go</li><li>gRPC</li><li>Protocol Buffers</li><li>Next.js</li><li>TypeScript</li><li>PostgreSQL</li><li>Redis</li><li>Docker</li><li>Prometheus</li><li>GeoIP</li></ul>
           <ul>
-            <li>Built a scalable distributed monitoring system with the control plane and data plane separated architecturally.</li>
-            <li>Backend in Go using gRPC and Protocol Buffers for efficient, type-safe communication between planes.</li>
-            <li>Implemented probe agents suitable for global deployment, running ICMP, TCP and HTTP latency checks.</li>
-            <li>Designed a real-time dashboard in Next.js and Tailwind to visualise network performance and probe status.</li>
-            <li>Integrated GeoIP to map probe distribution and provide location-aware network analytics.</li>
-            <li>Engineered probe authentication with JWT and token-based validation to protect network integrity.</li>
-            <li>Optimised for high concurrency and horizontal scalability with Docker and clean architecture patterns.</li>
+    <li>Built a scalable distributed monitoring system with the control plane and data plane separated architecturally.</li>
+    <li>Backend in Go using gRPC and Protocol Buffers for efficient, type-safe communication between planes.</li>
+    <li>Implemented probe agents suitable for global deployment, running ICMP, TCP and HTTP latency checks.</li>
+    <li>Designed a real-time dashboard in Next.js and Tailwind to visualise network performance and probe status.</li>
+    <li>Integrated GeoIP to map probe distribution and provide location-aware network analytics.</li>
+    <li>Engineered probe authentication with JWT and token-based validation to protect network integrity.</li>
+    <li>Optimised for high concurrency and horizontal scalability with Docker and clean architecture patterns.</li>
           </ul>
         </div>
-      </li>
-      <li>
-        <div class="when">
+      </details></li>
+      <li><details>
+        <summary>
           <span class="p">Dec 2025</span>
-          <span class="c">OnMeeting</span>
-          <span class="l">PT Awan Data Indonesia</span>
-        </div>
-        <div>
-          <h3>Enterprise video conferencing <a class="gpa gpa--l" href="https://onmeeting.id">onmeeting.id ↗</a></h3>
+          <span class="c">Enterprise video conferencing</span>
+          <span class="l">OnMeeting · PT Awan Data Indonesia</span>
+          <a class="gpa gpa--l" href="https://onmeeting.id">onmeeting.id ↗</a>
+          <span class="chev">+</span>
+        </summary>
+        <div class="body">
           <ul class="stk"><li>Go (Fiber)</li><li>PostgreSQL</li><li>Next.js 15</li><li>TailwindCSS</li><li>WebRTC</li><li>PlugNMeet</li><li>Docker</li><li>HAProxy</li><li>GitLab CI/CD</li></ul>
           <ul>
-            <li>Developed a sovereign, enterprise-grade video conferencing platform for independent and secure digital communication.</li>
-            <li>Backend in Go (Fiber) and PostgreSQL delivering a REST API for JWT authentication and meeting orchestration.</li>
-            <li>Frontend in Next.js 15 and TailwindCSS, responsive, with Framer Motion and AOS for interaction.</li>
-            <li>Integrated PlugNMeet over WebRTC for HD video and audio, screen sharing, real-time chat and a multi-user whiteboard.</li>
-            <li>Implemented RTMP multi-broadcasting for live streaming and cloud recording management from the admin dashboard.</li>
-            <li>Orchestrated deployment on VPS with Docker and HAProxy for load balancing, SSL termination and high availability.</li>
+    <li>Developed a sovereign, enterprise-grade video conferencing platform for independent and secure digital communication.</li>
+    <li>Backend in Go (Fiber) and PostgreSQL delivering a REST API for JWT authentication and meeting orchestration.</li>
+    <li>Frontend in Next.js 15 and TailwindCSS, responsive, with Framer Motion and AOS for interaction.</li>
+    <li>Integrated PlugNMeet over WebRTC for HD video and audio, screen sharing, real-time chat and a multi-user whiteboard.</li>
+    <li>Implemented RTMP multi-broadcasting for live streaming and cloud recording management from the admin dashboard.</li>
+    <li>Orchestrated deployment on VPS with Docker and HAProxy for load balancing, SSL termination and high availability.</li>
           </ul>
         </div>
-      </li>
-      <li>
-        <div class="when">
+      </details></li>
+      <li><details>
+        <summary>
           <span class="p">May — Jun 2025</span>
-          <span class="c">Job Board Platform</span>
-          <span class="l">Three services</span>
-        </div>
-        <div>
-          <h3>Job board with search and real-time chat <a class="gpa gpa--l" href="https://github.com/umars28/job-board">GitHub ↗</a></h3>
+          <span class="c">Job board with search and real-time chat</span>
+          <span class="l">Job Board Platform · Three services</span>
+          <a class="gpa gpa--l" href="https://github.com/umars28/job-board">GitHub ↗</a>
+          <span class="chev">+</span>
+        </summary>
+        <div class="body">
           <ul class="stk"><li>Spring Boot</li><li>MySQL</li><li>Thymeleaf</li><li>Elasticsearch</li><li>ELK</li><li>RabbitMQ</li><li>WebSocket</li><li>Prometheus</li><li>Grafana</li></ul>
           <ul>
-            <li>Built a job board platform serving employers and job seekers.</li>
-            <li>Backend on Spring Boot and MySQL, with a server-side rendered frontend in Thymeleaf.</li>
-            <li>Implemented full-text search with Elasticsearch and audit logging through the ELK stack.</li>
-            <li>Separated the notification service behind RabbitMQ for asynchronous delivery, with REST APIs for notification management.</li>
-            <li>Added real-time chat as a separate WebSocket service connecting job seekers and companies.</li>
-            <li>Wired Prometheus and Grafana to visualise service performance and availability.</li>
-            <li>Supported role-based access for admin, company and job seeker, plus job posting and application tracking.</li>
+    <li>Built a job board platform serving employers and job seekers.</li>
+    <li>Backend on Spring Boot and MySQL, with a server-side rendered frontend in Thymeleaf.</li>
+    <li>Implemented full-text search with Elasticsearch and audit logging through the ELK stack.</li>
+    <li>Separated the notification service behind RabbitMQ for asynchronous delivery, with REST APIs for notification management.</li>
+    <li>Added real-time chat as a separate WebSocket service connecting job seekers and companies.</li>
+    <li>Wired Prometheus and Grafana to visualise service performance and availability.</li>
+    <li>Supported role-based access for admin, company and job seeker, plus job posting and application tracking.</li>
           </ul>
         </div>
-      </li>
-      <li>
-        <div class="when">
+      </details></li>
+      <li><details>
+        <summary>
           <span class="p">Jun 2025</span>
-          <span class="c">Sync vs async benchmark</span>
-          <span class="l">Spring Boot execution strategies</span>
-        </div>
-        <div>
-          <h3>Benchmarking execution strategies <a class="gpa gpa--l" href="https://github.com/umars28/spring-sync-vs-async-benchmark">GitHub ↗</a></h3>
+          <span class="c">Benchmarking execution strategies</span>
+          <span class="l">Sync vs async benchmark · Spring Boot execution strategies</span>
+          <a class="gpa gpa--l" href="https://github.com/umars28/spring-sync-vs-async-benchmark">GitHub ↗</a>
+          <span class="chev">+</span>
+        </summary>
+        <div class="body">
           <ul class="stk"><li>Spring Boot</li><li>RabbitMQ</li><li>Kafka</li><li>Redis Pub/Sub</li><li>Apache Benchmark</li><li>Bash</li></ul>
           <ul>
-            <li>Ran a benchmarking study on the performance trade-offs between synchronous and asynchronous execution in Spring Boot.</li>
-            <li>Compared traditional blocking request handling against <code>@Async</code> with both SimpleAsyncTaskExecutor and ThreadPoolTaskExecutor.</li>
-            <li>Compared message-based asynchronous processing across RabbitMQ, Kafka and Redis Pub/Sub.</li>
-            <li>Used Apache Benchmark and Bash to simulate concurrency and measure throughput, latency and scalability under increasing load.</li>
-            <li>Analysed and visualised the results to identify which strategy fits which requirement — high throughput against low latency.</li>
-            <li>Produced recommendations for choosing an execution model in real-world Spring Boot applications.</li>
+    <li>Ran a benchmarking study on the performance trade-offs between synchronous and asynchronous execution in Spring Boot.</li>
+    <li>Compared traditional blocking request handling against <code>@Async</code> with both SimpleAsyncTaskExecutor and ThreadPoolTaskExecutor.</li>
+    <li>Compared message-based asynchronous processing across RabbitMQ, Kafka and Redis Pub/Sub.</li>
+    <li>Used Apache Benchmark and Bash to simulate concurrency and measure throughput, latency and scalability under increasing load.</li>
+    <li>Analysed and visualised the results to identify which strategy fits which requirement — high throughput against low latency.</li>
+    <li>Produced recommendations for choosing an execution model in real-world Spring Boot applications.</li>
           </ul>
         </div>
-      </li>
+      </details></li>
     </ol>
   </div>
 
