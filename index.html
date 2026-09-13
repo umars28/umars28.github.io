@@ -307,16 +307,16 @@ body.lock{overflow:hidden}
   <div class="shead">
     <div>
       <span class="micro">Projects</span>
-      <h2>Twenty-seven projects, six years, nothing left out.</h2>
+      <h2>Twenty-eight projects, six years, nothing left out.</h2>
     </div>
     <p class="lead">From a container runtime written from scratch in Rust to the first CRUD app I shipped in 2020. Every one gets the same card and the same full write-up, and the ones with public source link straight to the repository. Filter by what they actually are, then open any card for the detail.</p>
   </div>
 
   <div class="filt" role="group" aria-label="Filter projects">
-    <button type="button" class="fb is-on" data-f="all">All<i>27</i></button>
+    <button type="button" class="fb is-on" data-f="all">All<i>28</i></button>
     <button type="button" class="fb" data-f="infra">Infrastructure<i>12</i></button>
     <button type="button" class="fb" data-f="svc">Services &amp; APIs<i>6</i></button>
-    <button type="button" class="fb" data-f="web">Web apps<i>9</i></button>
+    <button type="button" class="fb" data-f="web">Web apps<i>10</i></button>
   </div>
 
   <div class="pgrid">
@@ -377,6 +377,16 @@ body.lock{overflow:hidden}
         <h3>marspay</h3>
         <span class="l">Indonesian e-wallet</span>
         <ul class="stk"><li>Go</li><li>PostgreSQL</li><li>Ledger</li><li class="mo">+1</li></ul>
+      </div>
+      <span class="more">Details <i>→</i></span>
+    </article>
+    <article class="pcard" data-k="marspanel" data-type="web" style="--hue:250" tabindex="0" role="button" aria-label="Open marspanel">
+      <div class="cov" data-img="assets/proj/marspanel.png"><span>MARSPANEL</span></div>
+      <div class="pcb">
+        <span class="p">2026</span>
+        <h3>marspanel</h3>
+        <span class="l">Admin template for infrastructure consoles</span>
+        <ul class="stk"><li>HTML</li><li>CSS</li><li>JavaScript</li><li class="mo">+2</li></ul>
       </div>
       <span class="more">Details <i>→</i></span>
     </article>
@@ -664,6 +674,18 @@ body.lock{overflow:hidden}
         <li>Real-time risk holdback that withholds part of a payout while a transaction still looks risky.</li>
         <li>Payment rails are simulated on purpose — operating the real ones in Indonesia requires a PJP licence.</li>
         <li>Double-entry ledger underneath, because a wallet that cannot reconcile is not a wallet.</li>
+    </ul>
+  </div>
+  <div class="pcd" data-d="marspanel" hidden>
+    <span class="p">2026</span>
+    <h3>marspanel</h3>
+    <span class="l">Admin template for infrastructure consoles</span><a class="gpa gpa--l" href="https://github.com/umars28/marspanel">GitHub ↗</a><a class="gpa" href="https://umars28.github.io/marspanel/">Live demo ↗</a>
+    <ul class="stk"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>SVG</li><li>WCAG</li></ul>
+    <ul class="bl">
+        <li>Draws the states every other admin template skips: a failed instance, a volume stuck detaching, a quota at 92%, a cluster no longer N+1.</li>
+        <li>Six status colours behind one class, read by pills, banners, calendar events, log lines and charts alike — one vocabulary instead of one palette per component.</li>
+        <li>Ships 38 pages and 342 classes with zero runtime dependencies: no webfont, no icon CDN, no chart library, so it renders identically on an air-gapped node.</li>
+        <li>The build measures every colour pair against its real composited backdrop and fails below WCAG AA. The first audit failed 16 of 54; all 54 pass.</li>
     </ul>
   </div>
   <div class="pcd" data-d="redisha" hidden>
