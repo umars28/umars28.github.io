@@ -68,9 +68,10 @@ h1{font-style:italic;font-weight:800;text-transform:uppercase;font-size:clamp(2.
 .blurb{line-height:1.62;color:var(--ink2);max-width:30ch}
 .social h2{font-size:.95rem;font-weight:700;margin-bottom:.875rem}
 .social div{display:flex;gap:.5rem;justify-content:flex-end}
-.social a{width:38px;height:38px;border-radius:12px;background:rgba(255,255,255,.7);border:1px solid var(--line);
+.social a,.social button{width:38px;height:38px;border-radius:12px;background:rgba(255,255,255,.7);border:1px solid var(--line);
   display:grid;place-items:center;font-family:var(--mono);font-size:.64rem;color:var(--violet);transition:all .25s var(--ease)}
-.social a:hover{background-image:var(--grad);color:#fff;transform:translateY(-2px)}
+.social button{cursor:pointer;padding:0}
+.social a:hover,.social button:hover{background-image:var(--grad);color:#fff;transform:translateY(-2px)}
 .hrole{font-weight:800;text-transform:uppercase;font-size:clamp(1.1rem,2.4vw,2.05rem);line-height:1.08;letter-spacing:-.045em}
 .hrole em{font-style:normal;background-image:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 .avatar{grid-column:2;grid-row:1;z-index:2;position:relative;display:flex;align-items:flex-end;justify-content:center;min-height:0}
@@ -102,41 +103,11 @@ img[data-avatar].is-speaking{animation-duration:2.4s}
 .lead{font-size:clamp(1rem,1.5vw,1.15rem);line-height:1.66;color:var(--ink2)}
 @media(max-width:820px){.shead{grid-template-columns:1fr}}
 
-.panel{background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.9);border-radius:clamp(16px,2vw,26px);
-  box-shadow:0 18px 50px rgba(80,40,160,.08);backdrop-filter:blur(14px);
-  padding:clamp(1.25rem,2.6vw,2.1rem);margin-top:clamp(1.5rem,3.5vh,2.25rem)}
-
-.xp{display:grid;gap:0}
-.xp>li{list-style:none;border-top:1px solid var(--line)}
-.xp>li:first-child{border-top:0}
-.xp summary{cursor:pointer;list-style:none;display:flex;flex-wrap:wrap;align-items:baseline;
-  gap:.3rem 1.1rem;padding-block:.95rem;border-radius:10px;transition:background .2s var(--ease)}
-.xp summary::-webkit-details-marker{display:none}
-.xp summary:hover{background:rgba(123,63,228,.05)}
-.xp summary:hover .c{color:var(--violet)}
-.xp .p{flex:0 0 138px;font-family:var(--mono);font-size:.72rem;letter-spacing:.04em;color:var(--violet)}
-.xp .c{flex:1 1 210px;font-weight:700;font-size:1rem;letter-spacing:-.02em;transition:color .2s}
-.xp .l{flex:1 1 240px;font-size:.83rem;color:var(--muted)}
-.xp .chev{margin-left:auto;width:22px;height:22px;flex:none;display:grid;place-items:center;
-  border-radius:7px;background:rgba(123,63,228,.09);color:var(--violet);font-size:.85rem;line-height:1;
-  transition:transform .3s var(--ease)}
-.xp details[open] .chev{transform:rotate(45deg)}
-.xp .body{padding:.35rem 0 1.35rem}
-.xp ul{display:grid;gap:.55rem;padding-left:0}
-.xp ul li{list-style:none;position:relative;padding-left:1.4rem;color:var(--ink2);line-height:1.6;
-  font-size:.9rem;max-width:74ch}
-.xp ul li::before{content:"";position:absolute;left:0;top:.6em;width:6px;height:6px;border-radius:99px;background-image:var(--grad)}
-.xp .gpa{font-family:var(--mono);font-size:.68rem;font-weight:500;letter-spacing:.04em;color:var(--muted);
-  border:1px solid var(--line2);border-radius:999px;padding:.18rem .55rem;white-space:nowrap}
-.xp .gpa--l{color:var(--violet);border-color:rgba(123,63,228,.32)}
-.xp .gpa--l:hover{background:rgba(123,63,228,.1)}
 .stk{display:flex;flex-wrap:wrap;gap:.3rem}
 .stk li{list-style:none;padding:.18rem .55rem;max-width:none;background:rgba(123,63,228,.07);border-radius:6px;
   font-family:var(--mono);font-size:.66rem;color:var(--ink2);line-height:1.5}
 .stk li::before{display:none}
 .stk li.mo{background:transparent;color:var(--muted)}
-.xp ul.stk{margin-bottom:.9rem}
-@media(max-width:680px){.xp .p{flex-basis:100%}.xp .l{flex-basis:100%}}
 
 .skl{margin-top:clamp(1.75rem,4vh,2.5rem);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
   gap:clamp(.9rem,1.8vw,1.25rem)}
@@ -249,6 +220,17 @@ img[data-avatar].is-speaking{animation-duration:2.4s}
 .mbody .bl{margin-top:1.05rem;display:grid;gap:.55rem;border-top:1px solid var(--line);padding-top:1.05rem}
 .mbody .bl li{list-style:none;position:relative;padding-left:1.4rem;color:var(--ink2);font-size:.89rem;line-height:1.6}
 .mbody .bl li::before{content:"";position:absolute;left:0;top:.6em;width:6px;height:6px;border-radius:99px;background-image:var(--grad)}
+.cvm{position:fixed;inset:0;z-index:70;display:grid;place-items:center;padding:clamp(.6rem,3vw,2rem)}
+.cvm[hidden]{display:none}
+.cvbox{position:relative;width:min(940px,100%);height:min(88svh,100%);display:flex;flex-direction:column;
+  background:#FBF8FF;border-radius:clamp(14px,1.8vw,20px);overflow:hidden;
+  box-shadow:0 40px 90px rgba(30,10,70,.35);animation:mrise .35s var(--ease)}
+.cvbar{flex:none;display:flex;align-items:center;gap:1rem;padding:.7rem .8rem .7rem 1.1rem;
+  border-bottom:1px solid var(--line);background:rgba(255,255,255,.8)}
+.cvout{margin-left:auto;font-family:var(--mono);font-size:.68rem;color:var(--violet)}
+.cvout:hover{text-decoration:underline}
+.cvbar .mx{position:static;width:30px;height:30px;box-shadow:none;background:rgba(123,63,228,.09)}
+.cvbox iframe{flex:1;width:100%;border:0;background:#EDE8F6}
 body.lock{overflow:hidden}
 @media(prefers-reduced-motion:reduce){
   .pil,.grp{opacity:1;transform:none;transition:none}
@@ -307,8 +289,7 @@ body.lock{overflow:hidden}
   <header class="topbar"><div class="container"><div class="bar">
     <a class="brand" href="/"><span></span>Umar Sabirin</a>
     <nav>
-      <a href="#summary">Summary</a><a href="#experience">Experience</a>
-      <a href="#education">Education</a><a href="#skills">Skills</a>
+      <a href="#summary">Summary</a><a href="#skills">Skills</a>
       <a href="#projects">Projects</a><a href="#roles">Roles</a>
     </nav>
     <a class="btn btn--p btn--sm" href="mailto:umarsabirin369@gmail.com">Get in touch <i>→</i></a>
@@ -320,7 +301,7 @@ body.lock{overflow:hidden}
       <div class="foot">
         <div class="actions">
           <a class="btn btn--p" href="mailto:umarsabirin369@gmail.com">Let's talk <i>→</i></a>
-          <a class="btn btn--g" href="assets/Umar_Sabirin_CV_DevOps.pdf" download>Download CV <i>↓</i></a>
+          <button class="btn btn--g" type="button" data-cvopen>Preview CV <i>↗</i></button>
         </div>
         <p class="blurb">Five years building and running infrastructure — CI/CD, Kubernetes, Terraform, and bare-metal virtualisation.</p>
       </div>
@@ -333,7 +314,7 @@ body.lock{overflow:hidden}
 
     <section class="side side--r">
       <div class="social"><h2>Find me</h2><div>
-        <a href="https://github.com/umars28" title="GitHub">GH</a><a href="https://www.linkedin.com/in/umar-sabirin-5896481a5" title="LinkedIn">IN</a><a href="mailto:umarsabirin369@gmail.com" title="Email">@</a><a href="assets/Umar_Sabirin_CV_DevOps.pdf" title="Download CV" download>CV</a>
+        <a href="https://github.com/umars28" title="GitHub">GH</a><a href="https://www.linkedin.com/in/umar-sabirin-5896481a5" title="LinkedIn">IN</a><a href="mailto:umarsabirin369@gmail.com" title="Email">@</a><button type="button" data-cvopen title="Preview CV">CV</button>
       </div></div>
       <div class="foot">
         <p class="blurb">I build and run the infrastructure other teams ship on.</p>
@@ -364,164 +345,6 @@ body.lock{overflow:hidden}
     <p class="lead">I build and run the infrastructure other teams ship on. Five years across DevOps, SRE, platform and cloud — pipelines, Kubernetes, Terraform, and bare-metal virtualisation. Most of it in Go and Linux, close to the kernel and close to the network. What I actually optimise for is boot time, pipeline time, and a quiet pager.</p>
   </div>
 
-</div></section>
-
-<section class="sec" id="experience"><div class="container">
-  <div class="shead">
-    <div><span class="micro">Work experience</span></div>
-  </div>
-
-  <div class="panel">
-    <ol class="xp">
-      <li><details open>
-        <summary>
-          <span class="p">Mar 2026 — Present</span>
-          <span class="c">DevOps Engineer</span>
-          <span class="l">Apple Developer Institute for DevOps × S-Quantum Engine · Tangerang, ID</span>
-          <span class="chev">+</span>
-        </summary>
-        <div class="body">
-          <ul>
-    <li>Infrastructure pipeline automation using Jenkins, Terraform IaC, and Ansible with security checkpoints.</li>
-    <li>Achieved significant pipeline acceleration through parallelization and dependency optimization.</li>
-    <li>Cost analysis integration for infrastructure changes.</li>
-    <li>Hardened VM image creation with security benchmarks and vulnerability scanning.</li>
-    <li>Observability platform with automated alerting and AI-driven diagnostics.</li>
-    <li>Multi-platform Kubernetes deployments, self-managed and EKS.</li>
-    <li>Zero-downtime cluster management strategies.</li>
-          </ul>
-        </div>
-      </details></li>
-      <li><details>
-        <summary>
-          <span class="p">Jul 2025 — Mar 2026</span>
-          <span class="c">Platform Engineer</span>
-          <span class="l">Maxcloud (PT Awan Data Indonesia) · Bekasi, ID</span>
-          <span class="chev">+</span>
-        </summary>
-        <div class="body">
-          <ul>
-    <li>High-concurrency gRPC/SSE stream multiplexing engine.</li>
-    <li>VM orchestration with significant performance improvements.</li>
-    <li>Payment system reliability via multi-gateway architecture.</li>
-    <li>Enterprise configuration system reducing deployment times.</li>
-    <li>Self-service load-balancing infrastructure.</li>
-    <li>Comprehensive testing across payment, streaming, and virtualization systems.</li>
-          </ul>
-        </div>
-      </details></li>
-      <li><details>
-        <summary>
-          <span class="p">Mar 2023 — Jun 2025</span>
-          <span class="c">Software Engineer</span>
-          <span class="l">Freelance / Self-Employed · Remote</span>
-          <span class="chev">+</span>
-        </summary>
-        <div class="body">
-          <ul>
-    <li>Message queue performance analysis and optimization.</li>
-    <li>Microservices architecture with real-time communication capabilities.</li>
-    <li>API security implementation with authentication and caching.</li>
-    <li>Government research platform architecture.</li>
-    <li>Domain-specific platforms across maritime, retail, and education sectors.</li>
-          </ul>
-        </div>
-      </details></li>
-      <li><details>
-        <summary>
-          <span class="p">Jun 2021 — Feb 2023</span>
-          <span class="c">Software Developer</span>
-          <span class="l">Fairtech Pte Ltd · Makassar, ID</span>
-          <span class="chev">+</span>
-        </summary>
-        <div class="body">
-          <ul>
-    <li>Database optimization for multi-tenant environments.</li>
-    <li>Regional business logic implementation across Southeast Asia.</li>
-    <li>Third-party shipping integration.</li>
-    <li>Video conferencing platform integration.</li>
-    <li>Search functionality implementation.</li>
-          </ul>
-        </div>
-      </details></li>
-      <li><details>
-        <summary>
-          <span class="p">Mar 2021 — Jun 2021</span>
-          <span class="c">Software Developer Intern</span>
-          <span class="l">Fairtech Pte Ltd · Makassar, ID</span>
-          <span class="chev">+</span>
-        </summary>
-        <div class="body">
-          <ul>
-    <li>Content management interface development.</li>
-    <li>Security validation improvements.</li>
-    <li>Internal tracking systems.</li>
-    <li>Database design enhancements.</li>
-          </ul>
-        </div>
-      </details></li>
-    </ol>
-  </div>
-</div></section>
-
-<section class="sec" id="education"><div class="container">
-  <div class="shead">
-    <div><span class="micro">Education</span></div>
-  </div>
-
-  <div class="panel">
-    <ol class="xp">
-      <li><details open>
-        <summary>
-          <span class="p">Aug 2020 — Feb 2025</span>
-          <span class="c">Bachelor of Information Systems</span>
-          <span class="l">Hasanuddin University · Makassar, ID</span>
-          <span class="gpa">GPA 3.82 / 4.00</span>
-          <span class="chev">+</span>
-        </summary>
-        <div class="body">
-          <ul>
-    <li>Relevant coursework: Data Structures, Algorithms, Database Management, Web Development, Software Engineering.</li>
-    <li>Thesis: "Analysis and Design of a Web-Based Student Management Information System Using the Design Thinking Method" — a case study at the Pondok Informatika Education Foundation.</li>
-    <li>Laboratory assistant in Basic Programming and Web Development.</li>
-          </ul>
-        </div>
-      </details></li>
-      <li><details>
-        <summary>
-          <span class="p">Aug 2022 — Dec 2022</span>
-          <span class="c">Teaching Assistant, Web Programming</span>
-          <span class="l">Hasanuddin University · Makassar, ID</span>
-          <span class="gpa">200+ students</span>
-          <span class="chev">+</span>
-        </summary>
-        <div class="body">
-          <ul>
-    <li>Mentored students through Web Programming and Basic Programming courses.</li>
-    <li>Guided third-year Information Systems students in Web Programming, and first-year students in Basic Programming.</li>
-    <li>Ran teaching sessions, gave guidance, and marked assignments.</li>
-    <li>Developed and organised course materials.</li>
-          </ul>
-        </div>
-      </details></li>
-      <li><details>
-        <summary>
-          <span class="p">Feb 2023 — Jun 2023</span>
-          <span class="c">Metaverse Asset Creation</span>
-          <span class="l">Independent Study (MSIB) Kampus Merdeka · PT Cipta Konsultan Internasional</span>
-          <span class="gpa">20 credits</span>
-          <span class="chev">+</span>
-        </summary>
-        <div class="body">
-          <ul>
-    <li>Coursework: Metaverse Asset Creation, Commercialization, Corporate Innovation, 3D Digital Asset Creation, Metaverse Design, Roblox Game Design and Coding.</li>
-    <li>Led the team, created 3D digital assets, designed the metaverse environment, and coded the Roblox game.</li>
-    <li>Final project in collaboration with Corporate Innovation Asia (CIAS) and WIR Group.</li>
-          </ul>
-        </div>
-      </details></li>
-    </ol>
-  </div>
 </div></section>
 
 <section class="sec" id="skills"><div class="container">
@@ -564,12 +387,11 @@ body.lock{overflow:hidden}
       <span class="micro">Projects</span>
       <h2>Twenty-seven projects, six years, nothing left out.</h2>
     </div>
-    <p class="lead">From a container runtime written from scratch in Rust to the first CRUD app I shipped in 2020. Every one gets the same card and the same full write-up — fifteen have public repositories you can read. Filter, then open any card for the detail.</p>
+    <p class="lead">From a container runtime written from scratch in Rust to the first CRUD app I shipped in 2020. Every one gets the same card and the same full write-up, and the ones with public source link straight to the repository. Filter by period, then open any card for the detail.</p>
   </div>
 
   <div class="filt" role="group" aria-label="Filter projects">
     <button type="button" class="fb is-on" data-f="all">All<i>27</i></button>
-    <button type="button" class="fb" data-f="oss">Open source<i>15</i></button>
     <button type="button" class="fb" data-f="a">2025 — 2026<i>18</i></button>
     <button type="button" class="fb" data-f="b">2023 — 2024<i>4</i></button>
     <button type="button" class="fb" data-f="c">2020 — 2021<i>5</i></button>
@@ -1249,11 +1071,11 @@ body.lock{overflow:hidden}
     <div>
       <span class="dot">Open to work</span>
       <h3>Tangerang Selatan, Indonesia. Remote welcome.</h3>
-      <p>One month notice. Happy to talk through any of the numbers on this page in detail — or ask the character up top.</p>
+      <p>One month notice. Preview the CV for the full history, or open any project above for how it was actually built.</p>
     </div>
     <div class="acts">
       <a class="btn btn--p" href="mailto:umarsabirin369@gmail.com">Email me <i>→</i></a>
-      <a class="btn btn--g" href="assets/Umar_Sabirin_CV_DevOps.pdf" download>Download CV <i>↓</i></a>
+      <button class="btn btn--g" type="button" data-cvopen>Preview CV <i>↗</i></button>
     </div>
   </div>
 </div></section>
@@ -1272,6 +1094,18 @@ body.lock{overflow:hidden}
     <button class="mx" data-close type="button" aria-label="Close">&times;</button>
     <div class="mcov" data-mcov><span data-mcovt></span></div>
     <div class="mbody" data-mbody></div>
+  </div>
+</div>
+
+<div class="cvm" data-cv hidden>
+  <div class="mbg" data-cvclose></div>
+  <div class="cvbox" role="dialog" aria-modal="true" aria-label="CV preview">
+    <div class="cvbar">
+      <span class="micro">Umar Sabirin — CV</span>
+      <a class="cvout" href="assets/Umar_Sabirin_CV_DevOps.pdf" target="_blank" rel="noopener">Open in new tab ↗</a>
+      <button class="mx" data-cvclose type="button" aria-label="Close">&times;</button>
+    </div>
+    <iframe data-cvframe title="CV preview"></iframe>
   </div>
 </div>
 

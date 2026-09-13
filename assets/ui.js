@@ -107,6 +107,37 @@
     });
   }
 
+  var cv = document.querySelector('[data-cv]');
+  if (cv) {
+    var frame = cv.querySelector('[data-cvframe]');
+    var cvSrc = cv.querySelector('.cvout').getAttribute('href');
+    var cvOpener = null;
+
+    var cvClose = function () {
+      cv.hidden = true;
+      document.body.classList.remove('lock');
+      if (cvOpener) { cvOpener.focus(); cvOpener = null; }
+    };
+
+    document.querySelectorAll('[data-cvopen]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        cvOpener = b;
+        if (!frame.getAttribute('src')) frame.setAttribute('src', cvSrc + '#view=FitH');
+        cv.hidden = false;
+        document.body.classList.add('lock');
+        cv.querySelector('.mx').focus();
+      });
+    });
+
+    cv.querySelectorAll('[data-cvclose]').forEach(function (b) {
+      b.addEventListener('click', cvClose);
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !cv.hidden) cvClose();
+    });
+  }
+
   var hint = document.querySelector('[data-hint]');
   var index = {};
   cards.forEach(function (c) {
