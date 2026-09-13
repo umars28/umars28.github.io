@@ -138,14 +138,29 @@ img[data-avatar].is-speaking{animation-duration:2.4s}
 .xp ul.stk{margin-bottom:.9rem}
 @media(max-width:680px){.xp .p{flex-basis:100%}.xp .l{flex-basis:100%}}
 
-.skl{margin-top:clamp(1.75rem,4vh,2.5rem);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:1.35rem clamp(1.5rem,3.5vw,3rem)}
-@media(max-width:900px){.skl{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:560px){.skl{grid-template-columns:1fr}}
-.skl>div{border-top:1px solid var(--line2);padding-top:.7rem;
-  opacity:0;transform:translateY(12px);transition:opacity .55s var(--ease),transform .55s var(--ease)}
-.skl>div.in{opacity:1;transform:none}
-.skl>div>span{display:block;margin-bottom:.5rem}
+.skl{margin-top:clamp(1.75rem,4vh,2.5rem);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:clamp(.9rem,1.8vw,1.25rem)}
+@media(max-width:1080px){.skl{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.skl{grid-template-columns:1fr}}
+.pil{position:relative;background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.9);
+  border-radius:18px;padding:clamp(1.1rem,2.2vw,1.4rem);display:flex;flex-direction:column;gap:1rem;
+  opacity:0;transform:translateY(14px);
+  transition:opacity .6s var(--ease),transform .6s var(--ease),box-shadow .3s var(--ease)}
+.pil.in{opacity:1;transform:none}
+.pil:hover{box-shadow:0 18px 44px rgba(80,40,160,.11)}
+.pil::before{content:"";position:absolute;inset:0 auto 0 0;width:3px;border-radius:18px 0 0 18px;
+  background-image:var(--grad);transform:scaleY(0);transform-origin:top;transition:transform .5s var(--ease) .2s}
+.pil.in::before{transform:scaleY(1)}
+.pil h3{display:flex;align-items:baseline;gap:.55rem;font-size:1rem;font-weight:800;letter-spacing:-.025em}
+.pil h3 .n{font-family:var(--mono);font-size:.68rem;font-weight:500;color:var(--violet)}
+.grp>span{display:block;margin-bottom:.45rem}
+.grp+.grp{margin-top:.15rem}
+.grp{opacity:0;transform:translateY(8px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
+.pil.in .grp{opacity:1;transform:none}
+.pil.in .grp:nth-child(2){transition-delay:.14s}
+.pil.in .grp:nth-child(3){transition-delay:.22s}
+.pil.in .grp:nth-child(4){transition-delay:.3s}
+.pil.in .grp:nth-child(5){transition-delay:.38s}
 .chips{display:flex;flex-wrap:wrap;gap:.3rem}
 .chips li{list-style:none;font-family:var(--mono);font-size:.68rem;color:var(--ink2);line-height:1.5;
   background:rgba(255,255,255,.7);border:1px solid var(--line);border-radius:7px;padding:.22rem .5rem;
@@ -156,10 +171,24 @@ img[data-avatar].is-speaking{animation-duration:2.4s}
   color:var(--violet);opacity:0;transform:translateY(-4px);transition:opacity .25s var(--ease),transform .25s var(--ease)}
 .hint.on{opacity:1;transform:none}
 
-.pgrid{margin-top:clamp(1.75rem,4vh,2.5rem);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:clamp(1rem,2vw,1.4rem)}
-@media(max-width:980px){.pgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:620px){.pgrid{grid-template-columns:1fr}}
+.filt{margin-top:clamp(1.5rem,3.5vh,2.25rem);display:flex;flex-wrap:wrap;gap:.4rem}
+.fb{cursor:pointer;font:inherit;font-size:.82rem;font-weight:600;display:inline-flex;align-items:center;gap:.5rem;
+  background:rgba(255,255,255,.7);border:1px solid var(--line);border-radius:999px;padding:.42rem .5rem .42rem .95rem;
+  color:var(--ink2);transition:all .25s var(--ease)}
+.fb i{font-style:normal;font-family:var(--mono);font-size:.66rem;min-width:20px;height:20px;padding:0 .35rem;
+  border-radius:999px;background:rgba(123,63,228,.1);color:var(--violet);display:grid;place-items:center}
+.fb:hover{border-color:var(--violet);color:var(--ink)}
+.fb.is-on{background-image:var(--grad);border-color:transparent;color:#fff;box-shadow:0 8px 20px rgba(105,45,205,.24)}
+.fb.is-on i{background:rgba(255,255,255,.24);color:#fff}
+
+.pgrid{margin-top:clamp(1.1rem,2.5vh,1.5rem);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:clamp(.85rem,1.6vw,1.15rem)}
+@media(max-width:1080px){.pgrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:820px){.pgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.pgrid{grid-template-columns:1fr}}
+.pcard.out{display:none}
+.pcard.pop{animation:pop .38s var(--ease) both}
+@keyframes pop{from{opacity:0;transform:translateY(12px) scale(.96)}}
 .pcard{cursor:pointer;display:flex;flex-direction:column;background:rgba(255,255,255,.74);
   border:1px solid rgba(255,255,255,.9);border-radius:18px;overflow:hidden;
   transition:transform .3s var(--ease),box-shadow .3s var(--ease),opacity .3s var(--ease)}
@@ -210,22 +239,10 @@ img[data-avatar].is-speaking{animation-duration:2.4s}
 .mbody .bl li::before{content:"";position:absolute;left:0;top:.6em;width:6px;height:6px;border-radius:99px;background-image:var(--grad)}
 body.lock{overflow:hidden}
 @media(prefers-reduced-motion:reduce){
-  .skl>div{opacity:1;transform:none;transition:none}
-  .mbg,.mbox{animation:none}
+  .pil,.grp{opacity:1;transform:none;transition:none}
+  .pil::before{transform:scaleY(1)}
+  .mbg,.mbox,.pcard.pop{animation:none}
 }
-
-.arch{margin-top:clamp(2rem,4vh,2.75rem)}
-.arch>span{display:block;margin-bottom:1rem}
-.arch ol{display:grid;gap:0}
-.arch li{list-style:none;display:grid;grid-template-columns:minmax(0,110px) minmax(0,1fr) minmax(0,1.1fr) auto;
-  gap:.4rem 1.25rem;align-items:baseline;padding-block:.85rem;border-top:1px solid var(--line)}
-.arch .y{font-family:var(--mono);font-size:.7rem;color:var(--violet)}
-.arch b{font-weight:600;font-size:.92rem}
-.arch .s{font-family:var(--mono);font-size:.68rem;color:var(--muted);line-height:1.55}
-.arch .s--q{text-align:right}
-.arch a{font-family:var(--mono);font-size:.68rem;color:var(--violet);text-align:right}
-.arch a:hover{text-decoration:underline}
-@media(max-width:820px){.arch li{grid-template-columns:1fr;gap:.3rem}.arch .s--q,.arch a{text-align:left}}
 
 .roles{margin-top:clamp(1.75rem,4vh,2.5rem);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
   gap:clamp(1rem,2vw,1.25rem)}
@@ -500,18 +517,30 @@ body.lock{overflow:hidden}
   </div>
 
   <div class="skl">
-    <div><span class="micro">Languages</span><ul class="chips"><li data-t="go">Go</li><li data-t="phplaravel">PHP (Laravel)</li><li data-t="javaspringboot">Java (Spring Boot)</li><li data-t="groovy">Groovy</li><li data-t="bash">Bash</li></ul></div>
-    <div><span class="micro">Architecture</span><ul class="chips"><li data-t="microservices">Microservices</li><li data-t="eventdriven">Event-Driven</li><li data-t="grpc">gRPC</li><li data-t="rest">REST</li><li data-t="websocket">WebSocket</li></ul></div>
-    <div><span class="micro">AI &amp; ML</span><ul class="chips"><li data-t="awsbedrock">AWS Bedrock</li><li data-t="anthropicapis">Anthropic APIs</li><li data-t="llmintegration">LLM integration</li><li data-t="promptoptimization">Prompt optimization</li></ul></div>
-    <div><span class="micro">Data systems</span><ul class="chips"><li data-t="postgresql">PostgreSQL</li><li data-t="mysql">MySQL</li><li data-t="mongodb">MongoDB</li><li data-t="redis">Redis</li><li data-t="elasticsearch">Elasticsearch</li><li data-t="kafka">Kafka</li><li data-t="rabbitmq">RabbitMQ</li><li data-t="sqs">SQS</li></ul></div>
-    <div><span class="micro">Cloud services</span><ul class="chips"><li data-t="awsec2">AWS EC2</li><li data-t="eks">EKS</li><li data-t="s3">S3</li><li data-t="rds">RDS</li><li data-t="iam">IAM</li><li data-t="vpc">VPC</li></ul></div>
-    <div><span class="micro">Containers</span><ul class="chips"><li data-t="docker">Docker</li><li data-t="kubernetes">Kubernetes</li><li data-t="amazoneks">Amazon EKS</li></ul></div>
-    <div><span class="micro">Infrastructure automation</span><ul class="chips"><li data-t="terraform">Terraform</li><li data-t="ansible">Ansible</li></ul></div>
-    <div><span class="micro">Pipelines</span><ul class="chips"><li data-t="githubactions">GitHub Actions</li><li data-t="gitlabci">GitLab CI</li><li data-t="bitbucket">Bitbucket</li><li data-t="jenkins">Jenkins</li></ul></div>
-    <div><span class="micro">Observability</span><ul class="chips"><li data-t="prometheus">Prometheus</li><li data-t="grafana">Grafana</li><li data-t="loki">Loki</li><li data-t="tempo">Tempo</li><li data-t="mimir">Mimir</li><li data-t="pyroscope">Pyroscope</li><li data-t="elk">ELK</li><li data-t="opentelemetry">OpenTelemetry</li></ul></div>
-    <div><span class="micro">Security</span><ul class="chips"><li data-t="hardeningframeworks">Hardening frameworks</li><li data-t="staticanalysis">Static analysis</li><li data-t="dynamicanalysis">Dynamic analysis</li><li data-t="secretmanagement">Secret management</li><li data-t="policyascode">Policy-as-code</li><li data-t="rbac">RBAC</li><li data-t="encryption">Encryption</li></ul></div>
-    <div><span class="micro">Systems</span><ul class="chips"><li data-t="linux">Linux</li><li data-t="proxmox">Proxmox</li><li data-t="qemukvm">QEMU/KVM</li><li data-t="lxclxd">LXC/LXD</li><li data-t="zfs">ZFS</li></ul></div>
-    <div><span class="micro">Network</span><ul class="chips"><li data-t="nftables">nftables</li><li data-t="openvpn">OpenVPN</li><li data-t="dns">DNS</li><li data-t="ipv6">IPv6</li><li data-t="nginx">Nginx</li><li data-t="haproxy">HAProxy</li></ul></div>
+    <section class="pil" style="--i:0">
+      <h3><span class="n">01</span>Build & ship</h3>
+      <div class="grp"><span class="micro">Languages</span><ul class="chips"><li data-t="go">Go</li><li data-t="phplaravel">PHP (Laravel)</li><li data-t="javaspringboot">Java (Spring Boot)</li><li data-t="groovy">Groovy</li><li data-t="bash">Bash</li></ul></div>
+      <div class="grp"><span class="micro">Architecture</span><ul class="chips"><li data-t="microservices">Microservices</li><li data-t="eventdriven">Event-Driven</li><li data-t="grpc">gRPC</li><li data-t="rest">REST</li><li data-t="websocket">WebSocket</li></ul></div>
+      <div class="grp"><span class="micro">Pipelines</span><ul class="chips"><li data-t="jenkins">Jenkins</li><li data-t="githubactions">GitHub Actions</li><li data-t="gitlabci">GitLab CI</li><li data-t="bitbucket">Bitbucket</li></ul></div>
+    </section>
+    <section class="pil" style="--i:1">
+      <h3><span class="n">02</span>Run & operate</h3>
+      <div class="grp"><span class="micro">Containers</span><ul class="chips"><li data-t="docker">Docker</li><li data-t="kubernetes">Kubernetes</li><li data-t="amazoneks">Amazon EKS</li></ul></div>
+      <div class="grp"><span class="micro">Infrastructure automation</span><ul class="chips"><li data-t="terraform">Terraform</li><li data-t="ansible">Ansible</li></ul></div>
+      <div class="grp"><span class="micro">Cloud services</span><ul class="chips"><li data-t="awsec2">AWS EC2</li><li data-t="eks">EKS</li><li data-t="s3">S3</li><li data-t="rds">RDS</li><li data-t="iam">IAM</li><li data-t="vpc">VPC</li></ul></div>
+      <div class="grp"><span class="micro">Systems</span><ul class="chips"><li data-t="linux">Linux</li><li data-t="proxmox">Proxmox</li><li data-t="qemukvm">QEMU/KVM</li><li data-t="lxclxd">LXC/LXD</li><li data-t="zfs">ZFS</li></ul></div>
+    </section>
+    <section class="pil" style="--i:2">
+      <h3><span class="n">03</span>Observe & secure</h3>
+      <div class="grp"><span class="micro">Observability</span><ul class="chips"><li data-t="prometheus">Prometheus</li><li data-t="grafana">Grafana</li><li data-t="loki">Loki</li><li data-t="tempo">Tempo</li><li data-t="mimir">Mimir</li><li data-t="pyroscope">Pyroscope</li><li data-t="elk">ELK</li><li data-t="opentelemetry">OpenTelemetry</li></ul></div>
+      <div class="grp"><span class="micro">Security</span><ul class="chips"><li data-t="hardeningframeworks">Hardening frameworks</li><li data-t="staticanalysis">Static analysis</li><li data-t="dynamicanalysis">Dynamic analysis</li><li data-t="secretmanagement">Secret management</li><li data-t="policyascode">Policy-as-code</li><li data-t="rbac">RBAC</li><li data-t="encryption">Encryption</li></ul></div>
+      <div class="grp"><span class="micro">Network</span><ul class="chips"><li data-t="nftables">nftables</li><li data-t="openvpn">OpenVPN</li><li data-t="dns">DNS</li><li data-t="ipv6">IPv6</li><li data-t="nginx">Nginx</li><li data-t="haproxy">HAProxy</li></ul></div>
+    </section>
+    <section class="pil" style="--i:3">
+      <h3><span class="n">04</span>Data & AI</h3>
+      <div class="grp"><span class="micro">Data systems</span><ul class="chips"><li data-t="postgresql">PostgreSQL</li><li data-t="mysql">MySQL</li><li data-t="mongodb">MongoDB</li><li data-t="redis">Redis</li><li data-t="elasticsearch">Elasticsearch</li><li data-t="kafka">Kafka</li><li data-t="rabbitmq">RabbitMQ</li><li data-t="sqs">SQS</li></ul></div>
+      <div class="grp"><span class="micro">AI & ML</span><ul class="chips"><li data-t="awsbedrock">AWS Bedrock</li><li data-t="anthropicapis">Anthropic APIs</li><li data-t="llmintegration">LLM integration</li><li data-t="promptoptimization">Prompt optimization</li></ul></div>
+    </section>
   </div>
   <p class="hint" data-hint aria-live="polite"></p>
 </div></section>
@@ -520,99 +549,224 @@ body.lock{overflow:hidden}
   <div class="shead">
     <div>
       <span class="micro">Projects</span>
-      <h2>Six I'd defend in an interview, and everything before them.</h2>
+      <h2>Sixteen projects, six years, nothing left out.</h2>
     </div>
-    <p class="lead">The six below are the ones where I owned the architecture rather than a ticket — private cloud, public cloud, distributed monitoring, conferencing at scale. Everything earlier is listed underneath, unedited, because leaving it out would be a nicer story than a true one.</p>
+    <p class="lead">From a private cloud orchestrator talking straight to QEMU, to the first CRUD app I shipped in 2020. Every one of them gets the same card and the same full write-up — filter by period, and open any card for the detail.</p>
+  </div>
+
+  <div class="filt" role="group" aria-label="Filter projects by period">
+    <button type="button" class="fb is-on" data-f="all">All<i>16</i></button>
+    <button type="button" class="fb" data-f="a">2025 — 2026<i>7</i></button>
+    <button type="button" class="fb" data-f="b">2023 — 2024<i>4</i></button>
+    <button type="button" class="fb" data-f="c">2020 — 2021<i>5</i></button>
   </div>
 
   <div class="pgrid">
-    <article class="pcard" data-k="frogve" style="--hue:268" tabindex="0" role="button" aria-label="Open Frogve orchestration platform">
+    <article class="pcard" data-k="pingve" data-era="a" style="--hue:210" tabindex="0" role="button" aria-label="Open Distributed network monitoring">
+      <div class="cov" data-img="assets/proj/pingve.png"><span>PINGVE</span></div>
+      <div class="pcb">
+        <span class="p">Jan 2026</span>
+        <h3>Distributed network monitoring</h3>
+        <span class="l">Pingve</span>
+        <ul class="stk"><li>Go</li><li>gRPC</li><li>Protocol Buffers</li><li class="mo">+7</li></ul>
+      </div>
+      <span class="more">Details <i>→</i></span>
+    </article>
+    <article class="pcard" data-k="frogve" data-era="a" style="--hue:268" tabindex="0" role="button" aria-label="Open Frogve orchestration platform">
       <div class="cov" data-img="assets/proj/frogve.png"><span>FROG CLOUD</span></div>
       <div class="pcb">
         <span class="p">Oct — Dec 2025</span>
         <h3>Frogve orchestration platform</h3>
-        <span class="l">Frog Cloud · Private cloud infrastructure</span>
-        <ul class="stk"><li>Go</li><li>Echo</li><li>SQLite</li><li>QEMU/KVM</li><li class="mo">+6</li></ul>
+        <span class="l">Frog Cloud</span>
+        <ul class="stk"><li>Go</li><li>Echo</li><li>SQLite</li><li class="mo">+7</li></ul>
       </div>
       <span class="more">Details <i>→</i></span>
     </article>
-    <article class="pcard" data-k="maxcloud" style="--hue:292" tabindex="0" role="button" aria-label="Open Public cloud management platform">
+    <article class="pcard" data-k="maxcloud" data-era="a" style="--hue:292" tabindex="0" role="button" aria-label="Open Public cloud management platform">
       <div class="cov" data-img="assets/proj/maxcloud.png"><span>MAXCLOUD</span></div>
       <div class="pcb">
         <span class="p">Jul 2025 — Now</span>
         <h3>Public cloud management platform</h3>
-        <span class="l">Maxcloud · Public cloud platform</span>
-        <ul class="stk"><li>Laravel 10</li><li>PHP 8</li><li>MySQL</li><li>Redis</li><li class="mo">+9</li></ul>
+        <span class="l">Maxcloud</span>
+        <ul class="stk"><li>Laravel 10</li><li>PHP 8</li><li>MySQL</li><li class="mo">+10</li></ul>
       </div>
       <span class="more">Details <i>→</i></span>
     </article>
-    <article class="pcard" data-k="pingve" style="--hue:210" tabindex="0" role="button" aria-label="Open Control plane / data plane monitoring">
-      <div class="cov" data-img="assets/proj/pingve.png"><span>PINGVE</span></div>
-      <div class="pcb">
-        <span class="p">Jan 2026</span>
-        <h3>Control plane / data plane monitoring</h3>
-        <span class="l">Pingve · Distributed network monitoring</span>
-        <ul class="stk"><li>Go</li><li>gRPC</li><li>Protocol Buffers</li><li>Next.js</li><li class="mo">+6</li></ul>
-      </div>
-      <span class="more">Details <i>→</i></span>
-    </article>
-    <article class="pcard" data-k="onmeeting" style="--hue:248" tabindex="0" role="button" aria-label="Open Enterprise video conferencing">
+    <article class="pcard" data-k="onmeeting" data-era="a" style="--hue:248" tabindex="0" role="button" aria-label="Open Enterprise video conferencing">
       <div class="cov" data-img="assets/proj/onmeeting.png"><span>ONMEETING</span></div>
       <div class="pcb">
         <span class="p">Dec 2025</span>
         <h3>Enterprise video conferencing</h3>
         <span class="l">OnMeeting · PT Awan Data Indonesia</span>
-        <ul class="stk"><li>Go (Fiber)</li><li>PostgreSQL</li><li>Next.js 15</li><li>TailwindCSS</li><li class="mo">+5</li></ul>
+        <ul class="stk"><li>Go (Fiber)</li><li>PostgreSQL</li><li>Next.js 15</li><li class="mo">+6</li></ul>
       </div>
       <span class="more">Details <i>→</i></span>
     </article>
-    <article class="pcard" data-k="jobboard" style="--hue:320" tabindex="0" role="button" aria-label="Open Job board with search and real-time chat">
-      <div class="cov" data-img="assets/proj/jobboard.png"><span>JOB BOARD PLATFORM</span></div>
+    <article class="pcard" data-k="jobboard" data-era="a" style="--hue:320" tabindex="0" role="button" aria-label="Open Job board with search and real-time chat">
+      <div class="cov" data-img="assets/proj/jobboard.png"><span>THREE SERVICES</span></div>
       <div class="pcb">
         <span class="p">May — Jun 2025</span>
         <h3>Job board with search and real-time chat</h3>
-        <span class="l">Job Board Platform · Three services</span>
-        <ul class="stk"><li>Spring Boot</li><li>MySQL</li><li>Thymeleaf</li><li>Elasticsearch</li><li class="mo">+5</li></ul>
+        <span class="l">Three services</span>
+        <ul class="stk"><li>Spring Boot</li><li>MySQL</li><li>Thymeleaf</li><li class="mo">+6</li></ul>
       </div>
       <span class="more">Details <i>→</i></span>
     </article>
-    <article class="pcard" data-k="benchmark" style="--hue:180" tabindex="0" role="button" aria-label="Open Benchmarking execution strategies">
-      <div class="cov" data-img="assets/proj/benchmark.png"><span>SYNC VS ASYNC BENCHMARK</span></div>
+    <article class="pcard" data-k="benchmark" data-era="a" style="--hue:180" tabindex="0" role="button" aria-label="Open Benchmarking execution strategies">
+      <div class="cov" data-img="assets/proj/benchmark.png"><span>SPRING BOOT</span></div>
       <div class="pcb">
         <span class="p">Jun 2025</span>
         <h3>Benchmarking execution strategies</h3>
-        <span class="l">Sync vs async benchmark · Spring Boot execution strategies</span>
-        <ul class="stk"><li>Spring Boot</li><li>RabbitMQ</li><li>Kafka</li><li>Redis Pub/Sub</li><li class="mo">+2</li></ul>
+        <span class="l">Spring Boot · sync versus async</span>
+        <ul class="stk"><li>Spring Boot</li><li>RabbitMQ</li><li>Kafka</li><li class="mo">+3</li></ul>
+      </div>
+      <span class="more">Details <i>→</i></span>
+    </article>
+    <article class="pcard" data-k="finance" data-era="a" style="--hue:150" tabindex="0" role="button" aria-label="Open Personal Finance Tracker API">
+      <div class="cov" data-img="assets/proj/finance.png"><span>REST API</span></div>
+      <div class="pcb">
+        <span class="p">May 2025</span>
+        <h3>Personal Finance Tracker API</h3>
+        <span class="l">REST API · documented and tested</span>
+        <ul class="stk"><li>Laravel</li><li>PostgreSQL</li><li>Redis</li><li class="mo">+4</li></ul>
+      </div>
+      <span class="more">Details <i>→</i></span>
+    </article>
+    <article class="pcard" data-k="smis" data-era="b" style="--hue:200" tabindex="0" role="button" aria-label="Open Ship Management Information System">
+      <div class="cov" data-img="assets/proj/smis.png"><span>MARITIME OPERATIONS</span></div>
+      <div class="pcb">
+        <span class="p">Sep — Oct 2024</span>
+        <h3>Ship Management Information System</h3>
+        <span class="l">Maritime operations</span>
+        <ul class="stk"><li>Laravel</li><li>PHP</li><li>MySQL</li><li class="mo">+3</li></ul>
+      </div>
+      <span class="more">Details <i>→</i></span>
+    </article>
+    <article class="pcard" data-k="student" data-era="b" style="--hue:276" tabindex="0" role="button" aria-label="Open Student Management Information System">
+      <div class="cov" data-img="assets/proj/student.png"><span>THESIS PROJECT</span></div>
+      <div class="pcb">
+        <span class="p">May 2024 — Apr 2025</span>
+        <h3>Student Management Information System</h3>
+        <span class="l">Thesis project</span>
+        <ul class="stk"><li>Laravel</li><li>MySQL</li><li>Redis</li><li class="mo">+3</li></ul>
+      </div>
+      <span class="more">Details <i>→</i></span>
+    </article>
+    <article class="pcard" data-k="inventory" data-era="b" style="--hue:30" tabindex="0" role="button" aria-label="Open Inventory Management System">
+      <div class="cov" data-img="assets/proj/inventory.png"><span>WEB AND DESKTOP</span></div>
+      <div class="pcb">
+        <span class="p">Mar 2024 — Feb 2025</span>
+        <h3>Inventory Management System</h3>
+        <span class="l">Web and desktop</span>
+        <ul class="stk"><li>Laravel</li><li>MySQL</li><li>Bootstrap</li><li class="mo">+3</li></ul>
+      </div>
+      <span class="more">Details <i>→</i></span>
+    </article>
+    <article class="pcard" data-k="garamqu" data-era="b" style="--hue:340" tabindex="0" role="button" aria-label="Open Salt Production Tracking, GaramQu">
+      <div class="cov" data-img="assets/proj/garamqu.png"><span>UNIVERSITAS HASANUDDIN</span></div>
+      <div class="pcb">
+        <span class="p">Aug 2023 — Apr 2024</span>
+        <h3>Salt Production Tracking, GaramQu</h3>
+        <span class="l">Universitas Hasanuddin · Kabupaten Maros</span>
+        <ul class="stk"><li>Laravel</li><li>MySQL</li><li>ReactJS</li><li class="mo">+1</li></ul>
+      </div>
+      <span class="more">Details <i>→</i></span>
+    </article>
+    <article class="pcard" data-k="siakad" data-era="c" style="--hue:96" tabindex="0" role="button" aria-label="Open Academic Management System">
+      <div class="cov" data-img="assets/proj/siakad.png"><span>SIAKAD</span></div>
+      <div class="pcb">
+        <span class="p">Feb — Mar 2021</span>
+        <h3>Academic Management System</h3>
+        <span class="l">SIAKAD</span>
+        <ul class="stk"><li>Go</li><li>MySQL</li><li>Bootstrap</li></ul>
+      </div>
+      <span class="more">Details <i>→</i></span>
+    </article>
+    <article class="pcard" data-k="laundry" data-era="c" style="--hue:190" tabindex="0" role="button" aria-label="Open Laundry Management System">
+      <div class="cov" data-img="assets/proj/laundry.png"><span>ADMIN, EMPLOYEE AND CUSTOMER ROLES</span></div>
+      <div class="pcb">
+        <span class="p">Sep 2020</span>
+        <h3>Laundry Management System</h3>
+        <span class="l">Admin, employee and customer roles</span>
+        <ul class="stk"><li>Laravel</li><li>MySQL</li><li>jQuery</li><li class="mo">+2</li></ul>
+      </div>
+      <span class="more">Details <i>→</i></span>
+    </article>
+    <article class="pcard" data-k="company" data-era="c" style="--hue:52" tabindex="0" role="button" aria-label="Open Company Profile Management System">
+      <div class="cov" data-img="assets/proj/company.png"><span>CMS</span></div>
+      <div class="pcb">
+        <span class="p">May — Sep 2020</span>
+        <h3>Company Profile Management System</h3>
+        <span class="l">CMS</span>
+        <ul class="stk"><li>Laravel</li><li>MySQL</li><li>jQuery</li><li class="mo">+2</li></ul>
+      </div>
+      <span class="more">Details <i>→</i></span>
+    </article>
+    <article class="pcard" data-k="blog" data-era="c" style="--hue:14" tabindex="0" role="button" aria-label="Open Blog Management System">
+      <div class="cov" data-img="assets/proj/blog.png"><span>CMS</span></div>
+      <div class="pcb">
+        <span class="p">Apr — Jul 2020</span>
+        <h3>Blog Management System</h3>
+        <span class="l">CMS</span>
+        <ul class="stk"><li>Laravel</li><li>MySQL</li><li>jQuery</li><li class="mo">+2</li></ul>
+      </div>
+      <span class="more">Details <i>→</i></span>
+    </article>
+    <article class="pcard" data-k="lms" data-era="c" style="--hue:232" tabindex="0" role="button" aria-label="Open Learning Management System">
+      <div class="cov" data-img="assets/proj/lms.png"><span>IDEOO ACADEMY</span></div>
+      <div class="pcb">
+        <span class="p">Feb — Jul 2020</span>
+        <h3>Learning Management System</h3>
+        <span class="l">IDEOO Academy</span>
+        <ul class="stk"><li>Laravel</li><li>PHP</li><li>MySQL</li><li class="mo">+3</li></ul>
       </div>
       <span class="more">Details <i>→</i></span>
     </article>
   </div>
 
+  <div class="pcd" data-d="pingve" hidden>
+    <span class="p">Jan 2026</span>
+    <h3>Distributed network monitoring</h3>
+    <span class="l">Pingve</span><span class="gpa">Private</span>
+    <ul class="stk"><li>Go</li><li>gRPC</li><li>Protocol Buffers</li><li>Next.js</li><li>TypeScript</li><li>PostgreSQL</li><li>Redis</li><li>Docker</li><li>Prometheus</li><li>GeoIP</li></ul>
+    <ul class="bl">
+        <li>Built a scalable distributed monitoring system with the control plane and data plane separated architecturally.</li>
+        <li>Backend in Go using gRPC and Protocol Buffers for efficient, type-safe communication between planes.</li>
+        <li>Implemented probe agents suitable for global deployment, running ICMP, TCP and HTTP latency checks.</li>
+        <li>Designed a real-time dashboard in Next.js and Tailwind to visualise network performance and probe status.</li>
+        <li>Integrated GeoIP to map probe distribution and provide location-aware network analytics.</li>
+        <li>Engineered probe authentication with JWT and token-based validation to protect network integrity.</li>
+        <li>Optimised for high concurrency and horizontal scalability with Docker and clean architecture patterns.</li>
+    </ul>
+  </div>
   <div class="pcd" data-d="frogve" hidden>
     <span class="p">Oct — Dec 2025</span>
     <h3>Frogve orchestration platform</h3>
-    <span class="l">Frog Cloud · Private cloud infrastructure</span><span class="gpa">Confidential</span>
+    <span class="l">Frog Cloud</span><span class="gpa">Confidential</span>
     <ul class="stk"><li>Go</li><li>Echo</li><li>SQLite</li><li>QEMU/KVM</li><li>Cloud-Init</li><li>nftables</li><li>OpenVPN</li><li>Kea DHCP</li><li>WebSocket</li><li>Docker</li></ul>
     <ul class="bl">
-
+        <li>Built a private cloud orchestration platform managing the full lifecycle of virtual machines, networking and storage.</li>
+        <li>Wrote a custom hypervisor manager in Go interfacing directly with QEMU/KVM, for bare-metal performance without heavy middleware.</li>
+        <li>Implemented a software-defined networking layer on nftables and Linux bridges, giving isolated VPCs with dynamic NAT, firewall rules and DHCP reservation.</li>
+        <li>Designed a multi-tenant project architecture with strict CPU, RAM and disk quotas, and role-based access control.</li>
+        <li>Integrated automated OpenVPN provisioning for secure access to private cloud resources by distributed teams.</li>
+        <li>Developed real-time monitoring and interactive VNC console access over WebSockets.</li>
+        <li>Automated provisioning with cloud-init for instant VM configuration and password management.</li>
     </ul>
   </div>
   <div class="pcd" data-d="maxcloud" hidden>
     <span class="p">Jul 2025 — Now</span>
     <h3>Public cloud management platform</h3>
-    <span class="l">Maxcloud · Public cloud platform</span><a class="gpa gpa--l" href="https://maxcloud.id/">maxcloud.id ↗</a>
+    <span class="l">Maxcloud</span><a class="gpa gpa--l" href="https://maxcloud.id/">maxcloud.id ↗</a>
     <ul class="stk"><li>Laravel 10</li><li>PHP 8</li><li>MySQL</li><li>Redis</li><li>RabbitMQ</li><li>Laravel Reverb</li><li>Proxmox API</li><li>PowerDNS</li><li>Xendit</li><li>Duitku</li><li>Docker</li><li>Sentry</li><li>JWT</li></ul>
     <ul class="bl">
-
-    </ul>
-  </div>
-  <div class="pcd" data-d="pingve" hidden>
-    <span class="p">Jan 2026</span>
-    <h3>Control plane / data plane monitoring</h3>
-    <span class="l">Pingve · Distributed network monitoring</span><span class="gpa">Private</span>
-    <ul class="stk"><li>Go</li><li>gRPC</li><li>Protocol Buffers</li><li>Next.js</li><li>TypeScript</li><li>PostgreSQL</li><li>Redis</li><li>Docker</li><li>Prometheus</li><li>GeoIP</li></ul>
-    <ul class="bl">
-
+        <li>Built an end-to-end platform automating the provisioning and billing of virtual infrastructure.</li>
+        <li>High-performance REST API on Laravel 10 using a service-repository pattern and Laravel Actions for modular domain logic.</li>
+        <li>Engineered a node allocation algorithm optimising CPU and RAM placement across Proxmox clusters for balanced load and high availability.</li>
+        <li>Automated IPv6 provisioning via SLAAC and integrated PowerDNS for real-time domain management and load balancer configuration.</li>
+        <li>Designed a modular payment gateway abstraction able to hot-swap providers, handle callbacks and reconcile transactions automatically.</li>
+        <li>Built a reactive notification system on Redis atomic counters for precise usage tracking, plus a Telegram bot for instant alerts.</li>
+        <li>Secured access with JWT and Google 2FA, and wired Sentry for error tracking and performance monitoring.</li>
     </ul>
   </div>
   <div class="pcd" data-d="onmeeting" hidden>
@@ -621,43 +775,189 @@ body.lock{overflow:hidden}
     <span class="l">OnMeeting · PT Awan Data Indonesia</span><a class="gpa gpa--l" href="https://onmeeting.id">onmeeting.id ↗</a>
     <ul class="stk"><li>Go (Fiber)</li><li>PostgreSQL</li><li>Next.js 15</li><li>TailwindCSS</li><li>WebRTC</li><li>PlugNMeet</li><li>Docker</li><li>HAProxy</li><li>GitLab CI/CD</li></ul>
     <ul class="bl">
-
+        <li>Developed a sovereign, enterprise-grade video conferencing platform for independent and secure digital communication.</li>
+        <li>Backend in Go (Fiber) and PostgreSQL delivering a REST API for JWT authentication and meeting orchestration.</li>
+        <li>Frontend in Next.js 15 and TailwindCSS, responsive, with Framer Motion and AOS for interaction.</li>
+        <li>Integrated PlugNMeet over WebRTC for HD video and audio, screen sharing, real-time chat and a multi-user whiteboard.</li>
+        <li>Implemented RTMP multi-broadcasting for live streaming and cloud recording management from the admin dashboard.</li>
+        <li>Orchestrated deployment on VPS with Docker and HAProxy for load balancing, SSL termination and high availability.</li>
     </ul>
   </div>
   <div class="pcd" data-d="jobboard" hidden>
     <span class="p">May — Jun 2025</span>
     <h3>Job board with search and real-time chat</h3>
-    <span class="l">Job Board Platform · Three services</span><a class="gpa gpa--l" href="https://github.com/umars28/job-board">GitHub ↗</a>
+    <span class="l">Three services</span><a class="gpa gpa--l" href="https://github.com/umars28/job-board">GitHub ↗</a>
     <ul class="stk"><li>Spring Boot</li><li>MySQL</li><li>Thymeleaf</li><li>Elasticsearch</li><li>ELK</li><li>RabbitMQ</li><li>WebSocket</li><li>Prometheus</li><li>Grafana</li></ul>
     <ul class="bl">
-
+        <li>Built a job board platform serving employers and job seekers.</li>
+        <li>Backend on Spring Boot and MySQL, with a server-side rendered frontend in Thymeleaf.</li>
+        <li>Implemented full-text search with Elasticsearch and audit logging through the ELK stack.</li>
+        <li>Separated the notification service behind RabbitMQ for asynchronous delivery, with REST APIs for notification management.</li>
+        <li>Added real-time chat as a separate WebSocket service connecting job seekers and companies.</li>
+        <li>Wired Prometheus and Grafana to visualise service performance and availability.</li>
+        <li>Supported role-based access for admin, company and job seeker, plus job posting and application tracking.</li>
     </ul>
   </div>
   <div class="pcd" data-d="benchmark" hidden>
     <span class="p">Jun 2025</span>
     <h3>Benchmarking execution strategies</h3>
-    <span class="l">Sync vs async benchmark · Spring Boot execution strategies</span><a class="gpa gpa--l" href="https://github.com/umars28/spring-sync-vs-async-benchmark">GitHub ↗</a>
+    <span class="l">Spring Boot · sync versus async</span><a class="gpa gpa--l" href="https://github.com/umars28/spring-sync-vs-async-benchmark">GitHub ↗</a>
     <ul class="stk"><li>Spring Boot</li><li>RabbitMQ</li><li>Kafka</li><li>Redis Pub/Sub</li><li>Apache Benchmark</li><li>Bash</li></ul>
     <ul class="bl">
-
+        <li>Ran a benchmarking study on the performance trade-offs between synchronous and asynchronous execution in Spring Boot.</li>
+        <li>Compared traditional blocking request handling against @Async with both SimpleAsyncTaskExecutor and ThreadPoolTaskExecutor.</li>
+        <li>Compared message-based asynchronous processing across RabbitMQ, Kafka and Redis Pub/Sub.</li>
+        <li>Used Apache Benchmark and Bash to simulate concurrency and measure throughput, latency and scalability under increasing load.</li>
+        <li>Analysed and visualised the results to identify which strategy fits which requirement — high throughput against low latency.</li>
+        <li>Produced recommendations for choosing an execution model in real-world Spring Boot applications.</li>
+    </ul>
+  </div>
+  <div class="pcd" data-d="finance" hidden>
+    <span class="p">May 2025</span>
+    <h3>Personal Finance Tracker API</h3>
+    <span class="l">REST API · documented and tested</span><a class="gpa gpa--l" href="https://github.com/umars28/personal-finance-tracker">GitHub ↗</a>
+    <ul class="stk"><li>Laravel</li><li>PostgreSQL</li><li>Redis</li><li>Docker</li><li>Swagger</li><li>Repository Pattern</li><li>PHPUnit</li></ul>
+    <ul class="bl">
+        <li>RESTful API to track daily income and expenses.</li>
+        <li>Secure authentication with Laravel Sanctum.</li>
+        <li>CRUD operations for transactions and categories.</li>
+        <li>Monthly summaries served from Redis caching.</li>
+        <li>Advanced filtering by date, type and category.</li>
+        <li>Repository pattern for maintainable, testable code.</li>
+        <li>Swagger and OpenAPI for automatically generated API docs.</li>
+        <li>Unit and feature tests with PHPUnit.</li>
+        <li>Containerised with Docker across app, Redis and PostgreSQL.</li>
+    </ul>
+  </div>
+  <div class="pcd" data-d="smis" hidden>
+    <span class="p">Sep — Oct 2024</span>
+    <h3>Ship Management Information System</h3>
+    <span class="l">Maritime operations</span><span class="gpa">Private</span>
+    <ul class="stk"><li>Laravel</li><li>PHP</li><li>MySQL</li><li>Bootstrap</li><li>jQuery</li><li>AJAX</li></ul>
+    <ul class="bl">
+        <li>Worked as full-stack developer on an SMIS supporting maritime operations.</li>
+        <li>Built the system for agent, operational staff, supervisor and HOA roles.</li>
+        <li>Data entry modules covering SOD, Veson and cost management.</li>
+        <li>Reporting modules for master data and annual reports.</li>
+        <li>Master data for customers, ships, ports, agents and cargo.</li>
+        <li>User management with role-based access control.</li>
+        <li>Responsive UI using Bootstrap, jQuery and AJAX.</li>
+        <li>Streamlined ship operations and agency tasks through centralised management.</li>
+    </ul>
+  </div>
+  <div class="pcd" data-d="student" hidden>
+    <span class="p">May 2024 — Apr 2025</span>
+    <h3>Student Management Information System</h3>
+    <span class="l">Thesis project</span><span class="gpa">Private</span>
+    <ul class="stk"><li>Laravel</li><li>MySQL</li><li>Redis</li><li>Bootstrap</li><li>jQuery</li><li>AJAX</li></ul>
+    <ul class="bl">
+        <li>Developed as the thesis project for graduation.</li>
+        <li>Managed data for students, parents, mentors and administrators.</li>
+        <li>Features covering activity scheduling, student progress reports to parents, and learning curriculum management.</li>
+        <li>Mentoring progress tracking for student development.</li>
+        <li>Redis for authentication rate limiting and query caching.</li>
+        <li>Responsive UI with Bootstrap, jQuery and AJAX.</li>
+        <li>Improved school operations through centralised student data management.</li>
+    </ul>
+  </div>
+  <div class="pcd" data-d="inventory" hidden>
+    <span class="p">Mar 2024 — Feb 2025</span>
+    <h3>Inventory Management System</h3>
+    <span class="l">Web and desktop</span><span class="gpa">Private</span>
+    <ul class="stk"><li>Laravel</li><li>MySQL</li><li>Bootstrap</li><li>jQuery</li><li>AJAX</li><li>Python</li></ul>
+    <ul class="bl">
+        <li>Developed an inventory management system with admin and cashier roles.</li>
+        <li>Full-stack web system built on Laravel, MySQL, Bootstrap, jQuery and AJAX.</li>
+        <li>Desktop application for the cashier written in Python over a web view.</li>
+        <li>Features for product transactions, product listings and detailed Excel reports.</li>
+        <li>New product entry with barcode support.</li>
+        <li>Customer management for buyer data.</li>
+    </ul>
+  </div>
+  <div class="pcd" data-d="garamqu" hidden>
+    <span class="p">Aug 2023 — Apr 2024</span>
+    <h3>Salt Production Tracking, GaramQu</h3>
+    <span class="l">Universitas Hasanuddin · Kabupaten Maros</span><span class="gpa">Private</span>
+    <ul class="stk"><li>Laravel</li><li>MySQL</li><li>ReactJS</li><li>REST API</li></ul>
+    <ul class="bl">
+        <li>Served as system architect and backend code reviewer.</li>
+        <li>Designed the system architecture and database structure.</li>
+        <li>Reviewed the backend REST API code across Laravel and MySQL.</li>
+        <li>Frontend developed in ReactJS against the API.</li>
+        <li>Enabled salt farmers to enter production data and report issues.</li>
+        <li>Comment feature connecting farmers, Universitas Hasanuddin researchers and local government.</li>
+        <li>Graphical production statistics to support decision-making.</li>
+        <li>Improved traceability and transparency for local salt production.</li>
+    </ul>
+  </div>
+  <div class="pcd" data-d="siakad" hidden>
+    <span class="p">Feb — Mar 2021</span>
+    <h3>Academic Management System</h3>
+    <span class="l">SIAKAD</span><a class="gpa gpa--l" href="https://github.com/umars28/academic-information-system">GitHub ↗</a>
+    <ul class="stk"><li>Go</li><li>MySQL</li><li>Bootstrap</li></ul>
+    <ul class="bl">
+        <li>Developed an academic information system.</li>
+        <li>Core features covering course scheduling, subject management, lecturer assignments and student enrolment.</li>
+        <li>Designed the relational database structure for classes, subjects, schedules, lecturers and students.</li>
+        <li>Backend built in Go and MySQL.</li>
+        <li>Responsive UI using Bootstrap.</li>
+        <li>Full CRUD operations for academic data management.</li>
+    </ul>
+  </div>
+  <div class="pcd" data-d="laundry" hidden>
+    <span class="p">Sep 2020</span>
+    <h3>Laundry Management System</h3>
+    <span class="l">Admin, employee and customer roles</span><span class="gpa">Archive</span>
+    <ul class="stk"><li>Laravel</li><li>MySQL</li><li>jQuery</li><li>AJAX</li><li>Bootstrap</li></ul>
+    <ul class="bl">
+        <li>Developed a laundry management system with admin, employee and customer roles.</li>
+        <li>Customers create laundry transactions and select packages.</li>
+        <li>Employees manage and update transactions.</li>
+        <li>Admin dashboard with complete statistics and transaction reports.</li>
+        <li>Responsive UI built with jQuery, AJAX and Bootstrap.</li>
+        <li>Improved transaction flow and daily operations for laundry services.</li>
+    </ul>
+  </div>
+  <div class="pcd" data-d="company" hidden>
+    <span class="p">May — Sep 2020</span>
+    <h3>Company Profile Management System</h3>
+    <span class="l">CMS</span><span class="gpa">Archive</span>
+    <ul class="stk"><li>Laravel</li><li>MySQL</li><li>jQuery</li><li>AJAX</li><li>Bootstrap</li></ul>
+    <ul class="bl">
+        <li>Developed a comprehensive company profile system.</li>
+        <li>CRUD features for about, articles, services, portfolio, profile, testimonials, address, contact, FAQ and feedback.</li>
+        <li>Dynamic and responsive UI using jQuery, AJAX and Bootstrap.</li>
+        <li>Backend built on Laravel and MySQL.</li>
+    </ul>
+  </div>
+  <div class="pcd" data-d="blog" hidden>
+    <span class="p">Apr — Jul 2020</span>
+    <h3>Blog Management System</h3>
+    <span class="l">CMS</span><span class="gpa">Archive</span>
+    <ul class="stk"><li>Laravel</li><li>MySQL</li><li>jQuery</li><li>AJAX</li><li>Bootstrap</li></ul>
+    <ul class="bl">
+        <li>Developed a blog management system with a CMS for publishing.</li>
+        <li>CRUD features for content creation, editing and publishing.</li>
+        <li>CMS sections covering homepage, about, articles, contact and master data.</li>
+        <li>Responsive UI with jQuery, AJAX and Bootstrap.</li>
+        <li>Improved the content management workflow.</li>
+    </ul>
+  </div>
+  <div class="pcd" data-d="lms" hidden>
+    <span class="p">Feb — Jul 2020</span>
+    <h3>Learning Management System</h3>
+    <span class="l">IDEOO Academy</span><span class="gpa">Private</span>
+    <ul class="stk"><li>Laravel</li><li>PHP</li><li>MySQL</li><li>Bootstrap</li><li>jQuery</li><li>AJAX</li></ul>
+    <ul class="bl">
+        <li>Worked as backend developer on the IDEOO Academy LMS.</li>
+        <li>Built the backend for user registration, course enrolment, progress and payment tracking.</li>
+        <li>CMS sections covering homepage, category, course, promo, transaction, article, tutor, customer, partner academy, FAQ and feedback.</li>
+        <li>Backend built on Laravel, PHP and MySQL.</li>
+        <li>Frontend interactions using Bootstrap, jQuery and AJAX.</li>
+        <li>Improved online course management and student engagement.</li>
     </ul>
   </div>
 
-  <div class="arch">
-    <span class="micro">Earlier work</span>
-    <ol>
-      <li><span class="y">2025</span><b>Personal Finance Tracker</b><span class="s">Laravel · PostgreSQL · Redis · Docker · Swagger · PHPUnit</span><a href="https://github.com/umars28/personal-finance-tracker">GitHub ↗</a></li>
-      <li><span class="y">2024 — 2025</span><b>Student Management Information System</b><span class="s">Laravel · MySQL · Redis · Bootstrap · jQuery</span><span class="s s--q">Private</span></li>
-      <li><span class="y">2024 — 2025</span><b>Inventory Management System</b><span class="s">Laravel · MySQL · Python · Bootstrap · jQuery</span><span class="s s--q">Private</span></li>
-      <li><span class="y">2024</span><b>Ship Management Information System</b><span class="s">Laravel · PHP · MySQL · Bootstrap · jQuery</span><span class="s s--q">Private</span></li>
-      <li><span class="y">2023 — 2024</span><b>Salt Production Tracking, GaramQu</b><span class="s">Laravel · MySQL · ReactJS · REST API</span><span class="s s--q">Private</span></li>
-      <li><span class="y">2021</span><b>Academic Management System (SIAKAD)</b><span class="s">Go · MySQL · Bootstrap</span><a href="https://github.com/umars28/academic-information-system">GitHub ↗</a></li>
-      <li><span class="y">2020</span><b>Laundry Management System</b><span class="s">Laravel · MySQL · jQuery · Bootstrap</span><span class="s s--q">Private</span></li>
-      <li><span class="y">2020</span><b>Company Profile Management System</b><span class="s">Laravel · MySQL · jQuery · Bootstrap</span><span class="s s--q">Private</span></li>
-      <li><span class="y">2020</span><b>Blog Management System</b><span class="s">Laravel · MySQL · jQuery · Bootstrap</span><span class="s s--q">Private</span></li>
-      <li><span class="y">2020</span><b>Learning Management System, IDEOO Academy</b><span class="s">Laravel · PHP · MySQL · Bootstrap · jQuery</span><span class="s s--q">Private</span></li>
-    </ol>
-  </div>
 </div></section>
 
 <section class="sec" id="roles"><div class="container">

@@ -69,21 +69,41 @@
     });
   }
 
-  var groups = [].slice.call(document.querySelectorAll('.skl > div'));
-  if (groups.length) {
+  var pillars = [].slice.call(document.querySelectorAll('.pil'));
+  if (pillars.length) {
     if (reduced || !('IntersectionObserver' in window)) {
-      groups.forEach(function (g) { g.classList.add('in'); });
+      pillars.forEach(function (g) { g.classList.add('in'); });
     } else {
       var io = new IntersectionObserver(function (entries) {
         entries.forEach(function (e) {
           if (!e.isIntersecting) return;
-          e.target.style.transitionDelay = (groups.indexOf(e.target) % 6) * 70 + 'ms';
+          e.target.style.transitionDelay = pillars.indexOf(e.target) * 110 + 'ms';
           e.target.classList.add('in');
           io.unobserve(e.target);
         });
-      }, { threshold: 0.15, rootMargin: '0px 0px -40px' });
-      groups.forEach(function (g) { io.observe(g); });
+      }, { threshold: 0.1, rootMargin: '0px 0px -40px' });
+      pillars.forEach(function (g) { io.observe(g); });
     }
+  }
+
+  var buttons = [].slice.call(document.querySelectorAll('.fb'));
+  if (buttons.length && cards.length) {
+    buttons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        buttons.forEach(function (x) { x.classList.toggle('is-on', x === btn); });
+        var want = btn.dataset.f;
+        var shown = 0;
+        cards.forEach(function (c) {
+          var show = want === 'all' || c.dataset.era === want;
+          c.classList.toggle('out', !show);
+          c.classList.remove('pop');
+          if (!show || reduced) return;
+          void c.offsetWidth;
+          c.style.animationDelay = (shown++ * 35) + 'ms';
+          c.classList.add('pop');
+        });
+      });
+    });
   }
 
   var hint = document.querySelector('[data-hint]');
