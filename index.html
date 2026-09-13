@@ -130,14 +130,17 @@ img[data-avatar].is-speaking{animation-duration:2.4s}
 .xp ul li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:7px;border-radius:99px;background-image:var(--grad)}
 .edu{margin-top:clamp(1.5rem,3vh,2.25rem);border-top:1px solid var(--line);padding-top:1.5rem;
   display:flex;flex-wrap:wrap;align-items:baseline;gap:.6rem 1.25rem}
+.edu+.edu{margin-top:0;padding-top:1.15rem}
 .edu b{font-weight:700}
-.edu .p{font-family:var(--mono);font-size:.72rem;color:var(--violet)}
+.edu .p{font-family:var(--mono);font-size:.72rem;color:var(--violet);min-width:96px}
 .edu .g{margin-left:auto;font-family:var(--mono);font-size:.72rem;color:var(--muted)}
-@media(max-width:760px){.xp>li{grid-template-columns:1fr;gap:.9rem}.edu .g{margin-left:0}}
+.edu .t{flex-basis:100%;color:var(--ink2);font-size:.86rem;padding-left:calc(96px + 1.25rem);line-height:1.6}
+@media(max-width:760px){.xp>li{grid-template-columns:1fr;gap:.9rem}.edu .g{margin-left:0}.edu .t{padding-left:0}}
 
-.cols{margin-top:clamp(2rem,5vh,3.25rem);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
-  gap:clamp(1.5rem,3vw,2.5rem)}
-@media(max-width:1080px){.cols{grid-template-columns:repeat(2,minmax(0,1fr));gap:2rem clamp(1.5rem,3vw,2.5rem)}}
+.cols{margin-top:clamp(2rem,5vh,3.25rem);display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:clamp(1.25rem,2.4vw,2rem)}
+@media(max-width:1180px){.cols{grid-template-columns:repeat(3,minmax(0,1fr));gap:2rem clamp(1.5rem,3vw,2.5rem)}}
+@media(max-width:820px){.cols{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:620px){.cols{grid-template-columns:1fr}}
 .cols article{border-top:2px solid var(--ink);padding-top:1rem}
 .cols h3{font-size:1.02rem;font-weight:700;letter-spacing:-.02em}
@@ -170,6 +173,24 @@ img[data-avatar].is-speaking{animation-duration:2.4s}
 .roles article:hover::before{transform:scaleY(1)}
 .roles h3{margin-top:.6rem;font-size:1.08rem;font-weight:700;letter-spacing:-.025em}
 .roles p{margin-top:.5rem;color:var(--ink2);font-size:.88rem;line-height:1.6}
+
+.projs{margin-top:clamp(2rem,5vh,3.25rem);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:clamp(1rem,2vw,1.5rem)}
+@media(max-width:980px){.projs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:620px){.projs{grid-template-columns:1fr}}
+.projs a{display:flex;flex-direction:column;gap:.7rem;background:rgba(255,255,255,.74);
+  border:1px solid rgba(255,255,255,.9);border-radius:18px;padding:clamp(1.25rem,2.5vw,1.6rem);
+  transition:transform .28s var(--ease),box-shadow .28s var(--ease)}
+.projs a:hover{transform:translateY(-3px);box-shadow:0 18px 40px rgba(80,40,160,.12)}
+.projs .top{display:flex;align-items:center;gap:.6rem}
+.projs .lang{font-family:var(--mono);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--violet);background:rgba(123,63,228,.1);border-radius:999px;padding:.2rem .6rem}
+.projs .go{margin-left:auto;color:var(--muted);font-size:.9rem;transition:transform .3s var(--ease)}
+.projs a:hover .go{transform:translateX(3px);color:var(--violet)}
+.projs h3{font-family:var(--mono);font-size:.95rem;font-weight:500;letter-spacing:-.01em}
+.projs p{color:var(--ink2);font-size:.88rem;line-height:1.6}
+.projs .m{margin-top:auto;font-family:var(--mono);font-size:.68rem;letter-spacing:.04em;color:var(--muted);
+  border-top:1px solid var(--line);padding-top:.7rem}
 
 .hire{margin-top:clamp(2rem,4vh,2.75rem);border-radius:clamp(16px,2vw,24px);background:#17122A;color:#EFEAFB;
   padding:clamp(1.75rem,4vw,2.75rem);display:grid;grid-template-columns:minmax(0,1fr) auto;
@@ -208,7 +229,8 @@ img[data-avatar].is-speaking{animation-duration:2.4s}
     <a class="brand" href="/"><span></span>Umar Sabirin</a>
     <nav>
       <a href="#summary">Summary</a><a href="#experience">Experience</a>
-      <a href="#skills">Skills</a><a href="#stack">Tech stack</a><a href="#roles">Roles</a>
+      <a href="#skills">Skills</a><a href="#stack">Tech stack</a>
+      <a href="#projects">Projects</a><a href="#roles">Roles</a>
     </nav>
     <a class="btn btn--p btn--sm" href="mailto:umarsabirin369@gmail.com">Get in touch <i>→</i></a>
   </div></div></header>
@@ -348,6 +370,19 @@ img[data-avatar].is-speaking{animation-duration:2.4s}
       <b>BSc Information Systems</b>
       <span>Hasanuddin University</span>
       <span class="g">GPA 3.82 / 4.00</span>
+      <span class="t">Thesis: designing a student information system with design thinking.</span>
+    </div>
+    <div class="edu">
+      <span class="p">2022</span>
+      <b>Teaching Assistant, Web Programming</b>
+      <span>Hasanuddin University</span>
+      <span class="g">200+ students</span>
+      <span class="t">A semester of explaining programming fundamentals to a room that had never seen them — where I learned to explain a system before defending it.</span>
+    </div>
+    <div class="edu">
+      <span class="p">2023</span>
+      <b>Independent Study, Metaverse Asset Creation</b>
+      <span>3D assets and a Roblox simulator</span>
     </div>
   </div>
 </div></section>
@@ -356,7 +391,7 @@ img[data-avatar].is-speaking{animation-duration:2.4s}
   <div class="shead">
     <div>
       <span class="micro">Skills</span>
-      <h2>Four things I'm genuinely good at.</h2>
+      <h2>Five things I'm genuinely good at.</h2>
     </div>
     <p class="lead">Grouped by what I actually do with them rather than by tool name — the tools are in the next section.</p>
   </div>
@@ -378,6 +413,10 @@ img[data-avatar].is-speaking{animation-duration:2.4s}
       <h3>Systems &amp; networking</h3>
       <p>QEMU/KVM and QMP, cloud-init, PXE, HAProxy and nftables. Comfortable below the container layer, where most people stop looking.</p>
     </article>
+    <article>
+      <h3>AI in the loop</h3>
+      <p>AWS Bedrock and the Anthropic API wired into CI/CD and incident response — diagnosing failed builds and summarising alerts. A tool in the pipeline, not a product I claim to build.</p>
+    </article>
   </div>
 
   <p class="note">Where I'm not strong, so you don't find out later: Java and Spring Boot are intermediate for me and I have never used Hibernate. My English is intermediate — fine in writing and in a technical conversation, still catching up in a fast meeting.</p>
@@ -396,17 +435,71 @@ img[data-avatar].is-speaking{animation-duration:2.4s}
     <div class="srow">
       <span class="micro">Daily</span>
       <ul class="pills">
-        <li>Go</li><li>Linux</li><li>Docker</li><li>Kubernetes</li><li>Terraform</li>
-        <li>Ansible</li><li>QEMU/KVM</li><li>Prometheus</li><li>Grafana</li><li>PostgreSQL</li>
+        <li>Go</li><li>Bash</li><li>Linux</li><li>Docker</li><li>Kubernetes</li><li>Terraform</li>
+        <li>Ansible</li><li>QEMU/KVM</li><li>Prometheus</li><li>Grafana</li><li>Loki</li><li>PostgreSQL</li>
       </ul>
     </div>
     <div class="srow">
       <span class="micro">Comfortable</span>
       <ul class="pills pills--q">
-        <li>AWS</li><li>Jenkins</li><li>GitHub Actions</li><li>Kafka</li><li>RabbitMQ</li>
-        <li>Redis</li><li>Elasticsearch</li><li>HAProxy</li><li>Vault</li><li>Trivy</li>
+        <li>AWS</li><li>Jenkins</li><li>Groovy</li><li>GitHub Actions</li><li>GitLab CI</li><li>Packer</li>
+        <li>Tempo</li><li>Mimir</li><li>Pyroscope</li><li>OpenTelemetry</li><li>ELK</li>
+        <li>Kafka</li><li>RabbitMQ</li><li>SQS</li><li>Redis</li><li>Elasticsearch</li>
+        <li>MySQL</li><li>MongoDB</li><li>Proxmox</li><li>LXC/LXD</li><li>ZFS</li>
+        <li>HAProxy</li><li>Nginx</li><li>nftables</li><li>OpenVPN</li><li>IPv6</li>
+        <li>Vault</li><li>Trivy</li><li>AWS Bedrock</li><li>Anthropic API</li>
+        <li>PHP/Laravel</li><li>Java/Spring</li>
       </ul>
     </div>
+  </div>
+</div></section>
+
+<section class="sec" id="projects"><div class="container">
+  <div class="shead">
+    <div>
+      <span class="micro">Projects</span>
+      <h2>Infrastructure I build when nobody is paying me.</h2>
+    </div>
+    <p class="lead">All public, all still moving. The ones below are where I work out ideas that are too risky to try first on someone else's production — a runtime, a scheduler, a secret store, written from scratch to find out what the abstraction costs.</p>
+  </div>
+
+  <div class="projs">
+    <a href="https://github.com/MarStack-Labs/marstack-container">
+      <div class="top"><span class="lang">Rust</span><span class="go">→</span></div>
+      <h3>marstack-container</h3>
+      <p>An OCI container runtime written from scratch. It explains container failures from kernel state instead of an exit code, and drops in as a Docker runtime.</p>
+      <span class="m">1,570 kernel functions reached · runc 2,603</span>
+    </a>
+    <a href="https://github.com/MarStack-Labs/marstack-cloud">
+      <div class="top"><span class="lang">Go</span><span class="go">→</span></div>
+      <h3>marstack-cloud</h3>
+      <p>A cloud platform for bare metal that treats container, VM, microVM and sandbox as one resource type, with native routing and no encapsulation in the data path.</p>
+      <span class="m">QEMU · Cloud Hypervisor · Firecracker</span>
+    </a>
+    <a href="https://github.com/MarStack-Labs/marstack-secrets">
+      <div class="top"><span class="lang">Go</span><span class="go">→</span></div>
+      <h3>marstack-secrets</h3>
+      <p>A secret and parameter store that boots sealed. Envelope encryption bound to tenant, path and version, Shamir unsealing, default-deny policy, and an audit log it refuses to start without.</p>
+      <span class="m">Sealed by default</span>
+    </a>
+    <a href="https://github.com/MarStack-Labs/marstack-access">
+      <div class="top"><span class="lang">Go</span><span class="go">→</span></div>
+      <h3>marstack-access</h3>
+      <p>Identity-aware access for Linux infrastructure. No standing credentials, certificates that never reach the user, tamper-evident audit, and sessions you can grep.</p>
+      <span class="m">Agentless · short-lived certs</span>
+    </a>
+    <a href="https://github.com/umars28/xdp-lb">
+      <div class="top"><span class="lang">Rust + C</span><span class="go">→</span></div>
+      <h3>xdp-lb</h3>
+      <p>A layer 4 load balancer living on the XDP hook — C data path, Rust control plane, maglev consistent hashing so backends can come and go without reshuffling every flow.</p>
+      <span class="m">eBPF · below the network stack</span>
+    </a>
+    <a href="https://github.com/umars28/redis-ha-ansible">
+      <div class="top"><span class="lang">Ansible</span><span class="go">→</span></div>
+      <h3>redis-ha-ansible</h3>
+      <p>Redis Cluster and Sentinel high availability as code, with Molecule scenarios that kill a primary and assert the failover actually happened.</p>
+      <span class="m">Tested by real failover</span>
+    </a>
   </div>
 </div></section>
 
