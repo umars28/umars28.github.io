@@ -94,7 +94,8 @@
         var want = btn.dataset.f;
         var shown = 0;
         cards.forEach(function (c) {
-          var show = want === 'all' || c.dataset.era === want;
+          var show = want === 'all' ||
+            (want === 'oss' ? c.dataset.oss === '1' : c.dataset.era === want);
           c.classList.toggle('out', !show);
           c.classList.remove('pop');
           if (!show || reduced) return;
