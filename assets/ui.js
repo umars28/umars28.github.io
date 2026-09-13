@@ -68,24 +68,54 @@
   }
 
   var buttons = [].slice.call(document.querySelectorAll('.fb'));
+  var moreWrap = document.querySelector('.pmore');
+  var moreBtn = document.querySelector('[data-more]');
+  var LIMIT = 12;
+  var want = 'all';
+  var expanded = false;
+
+  function render(animate) {
+    var matched = cards.filter(function (c) {
+      return want === 'all' || c.dataset.type === want;
+    });
+    var shown = 0;
+    cards.forEach(function (c) {
+      var i = matched.indexOf(c);
+      var visible = i !== -1 && (expanded || i < LIMIT);
+      c.classList.toggle('out', !visible);
+      c.classList.remove('pop');
+      if (!visible || !animate || reduced) return;
+      void c.offsetWidth;
+      c.style.animationDelay = (shown++ * 30) + 'ms';
+      c.classList.add('pop');
+    });
+    if (!moreWrap) return;
+    var hidden = matched.length - LIMIT;
+    moreWrap.hidden = expanded || hidden <= 0;
+    if (!moreWrap.hidden) moreBtn.firstChild.nodeValue = 'Show ' + hidden + ' more ';
+  }
+
   if (buttons.length && cards.length) {
     buttons.forEach(function (btn) {
       btn.addEventListener('click', function () {
         buttons.forEach(function (x) { x.classList.toggle('is-on', x === btn); });
-        var want = btn.dataset.f;
-        var shown = 0;
-        cards.forEach(function (c) {
-          var show = want === 'all' || c.dataset.era === want;
-          c.classList.toggle('out', !show);
-          c.classList.remove('pop');
-          if (!show || reduced) return;
-          void c.offsetWidth;
-          c.style.animationDelay = (shown++ * 35) + 'ms';
-          c.classList.add('pop');
-        });
+        want = btn.dataset.f;
+        expanded = false;
+        render(true);
       });
     });
   }
+
+  if (moreBtn) {
+    moreBtn.addEventListener('click', function () {
+      expanded = true;
+      render(true);
+      var first = cards.filter(function (c) { return !c.classList.contains('out'); })[LIMIT];
+      if (first) first.focus({ preventScroll: true });
+    });
+  }
+
+  if (cards.length) render(false);
 
   var cv = document.querySelector('[data-cv]');
   if (cv) {
