@@ -102,16 +102,6 @@ img[data-avatar].is-speaking{animation-duration:2.4s}
 .lead{font-size:clamp(1rem,1.5vw,1.15rem);line-height:1.66;color:var(--ink2)}
 @media(max-width:820px){.shead{grid-template-columns:1fr}}
 
-.figs{margin-top:clamp(2rem,5vh,3.25rem);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
-  gap:clamp(1rem,2.5vw,2rem);border-top:1px solid var(--line2);padding-top:1.75rem}
-.figs>div{display:flex;flex-direction:column;gap:.3rem}
-.figs b{font-size:clamp(1.9rem,4vw,2.9rem);font-weight:800;letter-spacing:-.05em;line-height:1;
-  background-image:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-.figs .k{font-weight:600;font-size:.9rem}
-.figs .n{font-family:var(--mono);font-size:.66rem;letter-spacing:.05em;color:var(--muted);line-height:1.5}
-@media(max-width:820px){.figs{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:2rem}}
-@media(max-width:420px){.figs{grid-template-columns:1fr}}
-
 .panel{background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.9);border-radius:clamp(16px,2vw,26px);
   box-shadow:0 18px 50px rgba(80,40,160,.08);backdrop-filter:blur(14px);
   padding:clamp(1.5rem,3.5vw,3rem);margin-top:clamp(2rem,5vh,3.25rem)}
@@ -128,37 +118,40 @@ img[data-avatar].is-speaking{animation-duration:2.4s}
 .xp ul{margin-top:.85rem;display:grid;gap:.6rem;padding-left:0}
 .xp ul li{list-style:none;position:relative;padding-left:1.4rem;color:var(--ink2);line-height:1.62;max-width:62ch}
 .xp ul li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:7px;border-radius:99px;background-image:var(--grad)}
-.edu{margin-top:clamp(1.5rem,3vh,2.25rem);border-top:1px solid var(--line);padding-top:1.5rem;
-  display:flex;flex-wrap:wrap;align-items:baseline;gap:.6rem 1.25rem}
-.edu+.edu{margin-top:0;padding-top:1.15rem}
-.edu b{font-weight:700}
-.edu .p{font-family:var(--mono);font-size:.72rem;color:var(--violet);min-width:96px}
-.edu .g{margin-left:auto;font-family:var(--mono);font-size:.72rem;color:var(--muted)}
-.edu .t{flex-basis:100%;color:var(--ink2);font-size:.86rem;padding-left:calc(96px + 1.25rem);line-height:1.6}
-@media(max-width:760px){.xp>li{grid-template-columns:1fr;gap:.9rem}.edu .g{margin-left:0}.edu .t{padding-left:0}}
+.xp h3 .gpa{font-family:var(--mono);font-size:.7rem;font-weight:500;letter-spacing:.04em;color:var(--muted);
+  border:1px solid var(--line2);border-radius:999px;padding:.2rem .6rem;margin-left:.6rem;white-space:nowrap}
+.xp h3 .gpa--l{color:var(--violet);border-color:rgba(123,63,228,.32)}
+.xp h3 .gpa--l:hover{background:rgba(123,63,228,.1)}
+.xp ul.stk{margin-top:.8rem;display:flex;flex-wrap:wrap;gap:.35rem}
+.xp ul.stk li{padding:.2rem .6rem;max-width:none;background:rgba(123,63,228,.07);border-radius:7px;
+  font-family:var(--mono);font-size:.68rem;color:var(--ink2);line-height:1.5}
+.xp ul.stk li::before{display:none}
+@media(max-width:760px){.xp>li{grid-template-columns:1fr;gap:.9rem}}
 
-.cols{margin-top:clamp(2rem,5vh,3.25rem);display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
-  gap:clamp(1.25rem,2.4vw,2rem)}
-@media(max-width:1180px){.cols{grid-template-columns:repeat(3,minmax(0,1fr));gap:2rem clamp(1.5rem,3vw,2.5rem)}}
-@media(max-width:820px){.cols{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:620px){.cols{grid-template-columns:1fr}}
-.cols article{border-top:2px solid var(--ink);padding-top:1rem}
-.cols h3{font-size:1.02rem;font-weight:700;letter-spacing:-.02em}
-.cols p{margin-top:.55rem;color:var(--ink2);line-height:1.62;font-size:.9rem}
-.note{margin-top:clamp(1.75rem,4vh,2.5rem);border-left:3px solid var(--violet);padding:.2rem 0 .2rem 1.1rem;
-  color:var(--ink2);font-size:.9rem;line-height:1.65;max-width:74ch}
+.skl{margin-top:clamp(2rem,5vh,3.25rem);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:clamp(1.25rem,2.5vw,2rem) clamp(1.5rem,4vw,3.5rem)}
+@media(max-width:760px){.skl{grid-template-columns:1fr}}
+.skl>div{border-top:1px solid var(--line2);padding-top:.9rem}
+.skl>div>span{display:block;margin-bottom:.7rem}
 
-.stackwrap{margin-top:clamp(2rem,5vh,3.25rem);border-radius:clamp(16px,2vw,26px);overflow:hidden;
-  background:linear-gradient(150deg,#F3ECFF,#E7DAFB 60%,#DCC9F8);border:1px solid rgba(255,255,255,.8);
-  padding:clamp(1.5rem,3.5vw,2.75rem)}
-.srow+.srow{margin-top:1.75rem;border-top:1px solid var(--line);padding-top:1.75rem}
-.srow>span{display:block;margin-bottom:.9rem}
+.arch{margin-top:clamp(2rem,4vh,2.75rem)}
+.arch>span{display:block;margin-bottom:1rem}
+.arch ol{display:grid;gap:0}
+.arch li{list-style:none;display:grid;grid-template-columns:minmax(0,110px) minmax(0,1fr) minmax(0,1.1fr) auto;
+  gap:.4rem 1.25rem;align-items:baseline;padding-block:.85rem;border-top:1px solid var(--line)}
+.arch .y{font-family:var(--mono);font-size:.7rem;color:var(--violet)}
+.arch b{font-weight:600;font-size:.92rem}
+.arch .s{font-family:var(--mono);font-size:.68rem;color:var(--muted);line-height:1.55}
+.arch .s--q{text-align:right}
+.arch a{font-family:var(--mono);font-size:.68rem;color:var(--violet);text-align:right}
+.arch a:hover{text-decoration:underline}
+@media(max-width:820px){.arch li{grid-template-columns:1fr;gap:.3rem}.arch .s--q,.arch a{text-align:left}}
+
 .pills{display:flex;flex-wrap:wrap;gap:.45rem}
 .pills li{list-style:none;background:rgba(255,255,255,.85);border:1px solid rgba(255,255,255,.95);
   border-radius:999px;padding:.42rem .95rem;font-size:.86rem;font-weight:600;
   box-shadow:0 3px 10px rgba(80,40,160,.06);transition:transform .2s var(--ease),color .2s}
 .pills li:hover{transform:translateY(-2px);color:var(--violet)}
-.pills--q li{background:transparent;box-shadow:none;border-color:var(--line2);font-weight:500;color:var(--ink2)}
 
 .roles{margin-top:clamp(2rem,5vh,3.25rem);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
   gap:clamp(1rem,2vw,1.25rem)}
@@ -173,24 +166,6 @@ img[data-avatar].is-speaking{animation-duration:2.4s}
 .roles article:hover::before{transform:scaleY(1)}
 .roles h3{margin-top:.6rem;font-size:1.08rem;font-weight:700;letter-spacing:-.025em}
 .roles p{margin-top:.5rem;color:var(--ink2);font-size:.88rem;line-height:1.6}
-
-.projs{margin-top:clamp(2rem,5vh,3.25rem);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:clamp(1rem,2vw,1.5rem)}
-@media(max-width:980px){.projs{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:620px){.projs{grid-template-columns:1fr}}
-.projs a{display:flex;flex-direction:column;gap:.7rem;background:rgba(255,255,255,.74);
-  border:1px solid rgba(255,255,255,.9);border-radius:18px;padding:clamp(1.25rem,2.5vw,1.6rem);
-  transition:transform .28s var(--ease),box-shadow .28s var(--ease)}
-.projs a:hover{transform:translateY(-3px);box-shadow:0 18px 40px rgba(80,40,160,.12)}
-.projs .top{display:flex;align-items:center;gap:.6rem}
-.projs .lang{font-family:var(--mono);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--violet);background:rgba(123,63,228,.1);border-radius:999px;padding:.2rem .6rem}
-.projs .go{margin-left:auto;color:var(--muted);font-size:.9rem;transition:transform .3s var(--ease)}
-.projs a:hover .go{transform:translateX(3px);color:var(--violet)}
-.projs h3{font-family:var(--mono);font-size:.95rem;font-weight:500;letter-spacing:-.01em}
-.projs p{color:var(--ink2);font-size:.88rem;line-height:1.6}
-.projs .m{margin-top:auto;font-family:var(--mono);font-size:.68rem;letter-spacing:.04em;color:var(--muted);
-  border-top:1px solid var(--line);padding-top:.7rem}
 
 .hire{margin-top:clamp(2rem,4vh,2.75rem);border-radius:clamp(16px,2vw,24px);background:#17122A;color:#EFEAFB;
   padding:clamp(1.75rem,4vw,2.75rem);display:grid;grid-template-columns:minmax(0,1fr) auto;
@@ -229,7 +204,7 @@ img[data-avatar].is-speaking{animation-duration:2.4s}
     <a class="brand" href="/"><span></span>Umar Sabirin</a>
     <nav>
       <a href="#summary">Summary</a><a href="#experience">Experience</a>
-      <a href="#skills">Skills</a><a href="#stack">Tech stack</a>
+      <a href="#education">Education</a><a href="#skills">Skills</a>
       <a href="#projects">Projects</a><a href="#roles">Roles</a>
     </nav>
     <a class="btn btn--p btn--sm" href="mailto:umarsabirin369@gmail.com">Get in touch <i>→</i></a>
@@ -285,172 +260,181 @@ img[data-avatar].is-speaking{animation-duration:2.4s}
     <p class="lead">I build and run the infrastructure other teams ship on. Five years across DevOps, SRE, platform and cloud — pipelines, Kubernetes, Terraform, and bare-metal virtualisation. Most of it in Go and Linux, close to the kernel and close to the network. What I actually optimise for is boot time, pipeline time, and a quiet pager.</p>
   </div>
 
-  <div class="figs">
-    <div><b>2s</b><span class="k">VM cold boot</span><span class="n">~300% faster than Proxmox</span></div>
-    <div><b>19,400</b><span class="k">concurrent streams</span><span class="n">gRPC + SSE from 194 agents</span></div>
-    <div><b>−83%</b><span class="k">CI stage time</span><span class="n">Jenkins · Terraform · Ansible</span></div>
-    <div><b>2,683</b><span class="k">req/s sustained</span><span class="n">event-driven on Kafka</span></div>
-  </div>
 </div></section>
 
 <section class="sec" id="experience"><div class="container">
   <div class="shead">
-    <div>
-      <span class="micro">Work experience</span>
-      <h2>Where I've been, and what changed while I was there.</h2>
-    </div>
-    <p class="lead">Four roles, moving steadily from writing services toward running the platforms they live on. Every number below is something I measured myself, in production.</p>
+    <div><span class="micro">Work experience</span></div>
   </div>
 
   <div class="panel">
     <ol class="xp">
       <li>
         <div class="when">
-          <span class="p">2026 — now</span>
-          <span class="c">Apple Dev Institute × S-Quantum</span>
-          <span class="l">Tangerang Selatan</span>
+          <span class="p">Mar 2026 — Present</span>
+          <span class="c">Apple Developer Institute for DevOps × S-Quantum Engine</span>
+          <span class="l">Tangerang, ID</span>
         </div>
         <div>
           <h3>DevOps Engineer</h3>
           <ul>
-            <li>Built the Jenkins pipelines that ship Terraform and Ansible, with lint, plan, test and security gates in front of every apply.</li>
-            <li>Cut pipeline stage time by roughly 83% through parallelisation and caching.</li>
-            <li>Standardised how teams get infrastructure, so nobody hand-rolls a VM any more.</li>
+            <li>Infrastructure pipeline automation using Jenkins, Terraform IaC, and Ansible with security checkpoints.</li>
+            <li>Achieved significant pipeline acceleration through parallelization and dependency optimization.</li>
+            <li>Cost analysis integration for infrastructure changes.</li>
+            <li>Hardened VM image creation with security benchmarks and vulnerability scanning.</li>
+            <li>Observability platform with automated alerting and AI-driven diagnostics.</li>
+            <li>Multi-platform Kubernetes deployments, self-managed and EKS.</li>
+            <li>Zero-downtime cluster management strategies.</li>
           </ul>
         </div>
       </li>
       <li>
         <div class="when">
-          <span class="p">2025 — 2026</span>
-          <span class="c">Maxcloud</span>
-          <span class="l">Jakarta</span>
+          <span class="p">Jul 2025 — Mar 2026</span>
+          <span class="c">Maxcloud (PT Awan Data Indonesia)</span>
+          <span class="l">Bekasi, ID</span>
         </div>
         <div>
-          <h3>Backend / Platform Engineer</h3>
+          <h3>Platform Engineer</h3>
           <ul>
-            <li>Wrote a Go orchestrator that speaks QMP straight to QEMU/KVM with no libvirt in the path — cold boot went to 2 seconds, about 300% faster than the Proxmox setup it replaced.</li>
-            <li>Multiplexed 19,400+ concurrent gRPC and SSE streams from 194 agents in a single Go service.</li>
-            <li>Built load balancing as a service on HAProxy and nftables, cutting network provisioning time by about 40%.</li>
-            <li>Took tenant branding deploys from 45 minutes to under 5 seconds.</li>
+            <li>High-concurrency gRPC/SSE stream multiplexing engine.</li>
+            <li>VM orchestration with significant performance improvements.</li>
+            <li>Payment system reliability via multi-gateway architecture.</li>
+            <li>Enterprise configuration system reducing deployment times.</li>
+            <li>Self-service load-balancing infrastructure.</li>
+            <li>Comprehensive testing across payment, streaming, and virtualization systems.</li>
           </ul>
         </div>
       </li>
       <li>
         <div class="when">
-          <span class="p">2023 — 2025</span>
-          <span class="c">Freelance</span>
+          <span class="p">Mar 2023 — Jun 2025</span>
+          <span class="c">Freelance / Self-Employed</span>
           <span class="l">Remote</span>
         </div>
         <div>
           <h3>Software Engineer</h3>
           <ul>
-            <li>Event-driven microservices on Kafka holding 2,683 requests per second.</li>
-            <li>Multi-gateway payment failover, so one provider going down stopped taking checkout with it.</li>
+            <li>Message queue performance analysis and optimization.</li>
+            <li>Microservices architecture with real-time communication capabilities.</li>
+            <li>API security implementation with authentication and caching.</li>
+            <li>Government research platform architecture.</li>
+            <li>Domain-specific platforms across maritime, retail, and education sectors.</li>
           </ul>
         </div>
       </li>
       <li>
         <div class="when">
-          <span class="p">2021 — 2023</span>
+          <span class="p">Jun 2021 — Feb 2023</span>
           <span class="c">Fairtech Pte Ltd</span>
-          <span class="l">Singapore, remote</span>
+          <span class="l">Makassar, ID</span>
         </div>
         <div>
           <h3>Software Developer</h3>
           <ul>
-            <li>Rebuilt multi-tenant queries for roughly 50% better performance.</li>
-            <li>First job where I had to run what I wrote — that is what pushed me toward infrastructure.</li>
+            <li>Database optimization for multi-tenant environments.</li>
+            <li>Regional business logic implementation across Southeast Asia.</li>
+            <li>Third-party shipping integration.</li>
+            <li>Video conferencing platform integration.</li>
+            <li>Search functionality implementation.</li>
+          </ul>
+        </div>
+      </li>
+      <li>
+        <div class="when">
+          <span class="p">Mar 2021 — Jun 2021</span>
+          <span class="c">Fairtech Pte Ltd</span>
+          <span class="l">Makassar, ID</span>
+        </div>
+        <div>
+          <h3>Software Developer Intern</h3>
+          <ul>
+            <li>Content management interface development.</li>
+            <li>Security validation improvements.</li>
+            <li>Internal tracking systems.</li>
+            <li>Database design enhancements.</li>
           </ul>
         </div>
       </li>
     </ol>
+  </div>
+</div></section>
 
-    <div class="edu">
-      <span class="p">2020 — 2025</span>
-      <b>BSc Information Systems</b>
-      <span>Hasanuddin University</span>
-      <span class="g">GPA 3.82 / 4.00</span>
-      <span class="t">Thesis: designing a student information system with design thinking.</span>
-    </div>
-    <div class="edu">
-      <span class="p">2022</span>
-      <b>Teaching Assistant, Web Programming</b>
-      <span>Hasanuddin University</span>
-      <span class="g">200+ students</span>
-      <span class="t">A semester of explaining programming fundamentals to a room that had never seen them — where I learned to explain a system before defending it.</span>
-    </div>
-    <div class="edu">
-      <span class="p">2023</span>
-      <b>Independent Study, Metaverse Asset Creation</b>
-      <span>3D assets and a Roblox simulator</span>
-    </div>
+<section class="sec" id="education"><div class="container">
+  <div class="shead">
+    <div><span class="micro">Education</span></div>
+  </div>
+
+  <div class="panel">
+    <ol class="xp">
+      <li>
+        <div class="when">
+          <span class="p">Aug 2020 — Feb 2025</span>
+          <span class="c">Hasanuddin University</span>
+          <span class="l">Makassar, ID</span>
+        </div>
+        <div>
+          <h3>Bachelor of Information Systems <span class="gpa">GPA 3.82 / 4.00</span></h3>
+          <ul>
+            <li>Relevant coursework: Data Structures, Algorithms, Database Management, Web Development, Software Engineering.</li>
+            <li>Thesis: "Analysis and Design of a Web-Based Student Management Information System Using the Design Thinking Method" — a case study at the Pondok Informatika Education Foundation.</li>
+            <li>Laboratory assistant in Basic Programming and Web Development.</li>
+          </ul>
+        </div>
+      </li>
+      <li>
+        <div class="when">
+          <span class="p">Aug 2022 — Dec 2022</span>
+          <span class="c">Hasanuddin University</span>
+          <span class="l">Makassar, ID</span>
+        </div>
+        <div>
+          <h3>Teaching Assistant, Web Programming <span class="gpa">200+ students</span></h3>
+          <ul>
+            <li>Mentored students through Web Programming and Basic Programming courses.</li>
+            <li>Guided third-year Information Systems students in Web Programming, and first-year students in Basic Programming.</li>
+            <li>Ran teaching sessions, gave guidance, and marked assignments.</li>
+            <li>Developed and organised course materials.</li>
+          </ul>
+        </div>
+      </li>
+      <li>
+        <div class="when">
+          <span class="p">Feb 2023 — Jun 2023</span>
+          <span class="c">Independent Study (MSIB) Kampus Merdeka</span>
+          <span class="l">PT Cipta Konsultan Internasional</span>
+        </div>
+        <div>
+          <h3>Metaverse Asset Creation <span class="gpa">20 credits</span></h3>
+          <ul>
+            <li>Coursework: Metaverse Asset Creation, Commercialization, Corporate Innovation, 3D Digital Asset Creation, Metaverse Design, Roblox Game Design and Coding.</li>
+            <li>Led the team, created 3D digital assets, designed the metaverse environment, and coded the Roblox game.</li>
+            <li>Final project in collaboration with Corporate Innovation Asia (CIAS) and WIR Group.</li>
+          </ul>
+        </div>
+      </li>
+    </ol>
   </div>
 </div></section>
 
 <section class="sec" id="skills"><div class="container">
   <div class="shead">
-    <div>
-      <span class="micro">Skills</span>
-      <h2>Five things I'm genuinely good at.</h2>
-    </div>
-    <p class="lead">Grouped by what I actually do with them rather than by tool name — the tools are in the next section.</p>
+    <div><span class="micro">Skills</span></div>
   </div>
 
-  <div class="cols">
-    <article>
-      <h3>Distributed systems</h3>
-      <p>Go services under real concurrency — gRPC, SSE, event-driven work on Kafka and RabbitMQ, and multi-tenant data models that stay fast as tenants pile up.</p>
-    </article>
-    <article>
-      <h3>Reliability</h3>
-      <p>Prometheus, Grafana, Loki and OpenTelemetry wired in from the start. SLOs that mean something, alerts that fire for a reason, and post-incident notes people actually read.</p>
-    </article>
-    <article>
-      <h3>Delivery</h3>
-      <p>Jenkins and GitHub Actions driving Terraform, Ansible and Packer. Every environment reproducible from a repo, every change reviewable before it lands.</p>
-    </article>
-    <article>
-      <h3>Systems &amp; networking</h3>
-      <p>QEMU/KVM and QMP, cloud-init, PXE, HAProxy and nftables. Comfortable below the container layer, where most people stop looking.</p>
-    </article>
-    <article>
-      <h3>AI in the loop</h3>
-      <p>AWS Bedrock and the Anthropic API wired into CI/CD and incident response — diagnosing failed builds and summarising alerts. A tool in the pipeline, not a product I claim to build.</p>
-    </article>
-  </div>
-
-  <p class="note">Where I'm not strong, so you don't find out later: Java and Spring Boot are intermediate for me and I have never used Hibernate. My English is intermediate — fine in writing and in a technical conversation, still catching up in a fast meeting.</p>
-</div></section>
-
-<section class="sec" id="stack"><div class="container">
-  <div class="shead">
-    <div>
-      <span class="micro">Tech stack</span>
-      <h2>What's actually on my machine.</h2>
-    </div>
-    <p class="lead">Split honestly: the first row is what I touch most weeks, the second is what I reach for when a project needs it.</p>
-  </div>
-
-  <div class="stackwrap">
-    <div class="srow">
-      <span class="micro">Daily</span>
-      <ul class="pills">
-        <li>Go</li><li>Bash</li><li>Linux</li><li>Docker</li><li>Kubernetes</li><li>Terraform</li>
-        <li>Ansible</li><li>QEMU/KVM</li><li>Prometheus</li><li>Grafana</li><li>Loki</li><li>PostgreSQL</li>
-      </ul>
-    </div>
-    <div class="srow">
-      <span class="micro">Comfortable</span>
-      <ul class="pills pills--q">
-        <li>AWS</li><li>Jenkins</li><li>Groovy</li><li>GitHub Actions</li><li>GitLab CI</li><li>Packer</li>
-        <li>Tempo</li><li>Mimir</li><li>Pyroscope</li><li>OpenTelemetry</li><li>ELK</li>
-        <li>Kafka</li><li>RabbitMQ</li><li>SQS</li><li>Redis</li><li>Elasticsearch</li>
-        <li>MySQL</li><li>MongoDB</li><li>Proxmox</li><li>LXC/LXD</li><li>ZFS</li>
-        <li>HAProxy</li><li>Nginx</li><li>nftables</li><li>OpenVPN</li><li>IPv6</li>
-        <li>Vault</li><li>Trivy</li><li>AWS Bedrock</li><li>Anthropic API</li>
-        <li>PHP/Laravel</li><li>Java/Spring</li>
-      </ul>
-    </div>
+  <div class="skl">
+    <div><span class="micro">Languages</span><ul class="pills"><li>Go</li><li>PHP (Laravel)</li><li>Java (Spring Boot)</li><li>Groovy</li><li>Bash</li></ul></div>
+    <div><span class="micro">Architecture</span><ul class="pills"><li>Microservices</li><li>Event-Driven</li><li>gRPC</li><li>REST</li><li>WebSocket</li></ul></div>
+    <div><span class="micro">AI &amp; ML</span><ul class="pills"><li>AWS Bedrock</li><li>Anthropic APIs</li><li>LLM integration</li><li>Prompt optimization</li></ul></div>
+    <div><span class="micro">Data systems</span><ul class="pills"><li>PostgreSQL</li><li>MySQL</li><li>MongoDB</li><li>Redis</li><li>Elasticsearch</li><li>Kafka</li><li>RabbitMQ</li><li>SQS</li></ul></div>
+    <div><span class="micro">Cloud services</span><ul class="pills"><li>AWS EC2</li><li>EKS</li><li>S3</li><li>RDS</li><li>IAM</li><li>VPC</li></ul></div>
+    <div><span class="micro">Containers</span><ul class="pills"><li>Docker</li><li>Kubernetes</li><li>Amazon EKS</li></ul></div>
+    <div><span class="micro">Infrastructure automation</span><ul class="pills"><li>Terraform</li><li>Ansible</li></ul></div>
+    <div><span class="micro">Pipelines</span><ul class="pills"><li>GitHub Actions</li><li>GitLab CI</li><li>Bitbucket</li><li>Jenkins</li></ul></div>
+    <div><span class="micro">Observability</span><ul class="pills"><li>Prometheus</li><li>Grafana</li><li>Loki</li><li>Tempo</li><li>Mimir</li><li>Pyroscope</li><li>ELK</li><li>OpenTelemetry</li></ul></div>
+    <div><span class="micro">Security</span><ul class="pills"><li>Hardening frameworks</li><li>Static analysis</li><li>Dynamic analysis</li><li>Secret management</li><li>Policy-as-code</li><li>RBAC</li><li>Encryption</li></ul></div>
+    <div><span class="micro">Systems</span><ul class="pills"><li>Linux</li><li>Proxmox</li><li>QEMU/KVM</li><li>LXC/LXD</li><li>ZFS</li></ul></div>
+    <div><span class="micro">Network</span><ul class="pills"><li>nftables</li><li>OpenVPN</li><li>DNS</li><li>IPv6</li><li>Nginx</li><li>HAProxy</li></ul></div>
   </div>
 </div></section>
 
@@ -458,48 +442,148 @@ img[data-avatar].is-speaking{animation-duration:2.4s}
   <div class="shead">
     <div>
       <span class="micro">Projects</span>
-      <h2>Infrastructure I build when nobody is paying me.</h2>
+      <h2>Six I'd defend in an interview, and everything before them.</h2>
     </div>
-    <p class="lead">All public, all still moving. The ones below are where I work out ideas that are too risky to try first on someone else's production — a runtime, a scheduler, a secret store, written from scratch to find out what the abstraction costs.</p>
+    <p class="lead">The six below are the ones where I owned the architecture rather than a ticket — private cloud, public cloud, distributed monitoring, conferencing at scale. Everything earlier is listed underneath, unedited, because leaving it out would be a nicer story than a true one.</p>
   </div>
 
-  <div class="projs">
-    <a href="https://github.com/MarStack-Labs/marstack-container">
-      <div class="top"><span class="lang">Rust</span><span class="go">→</span></div>
-      <h3>marstack-container</h3>
-      <p>An OCI container runtime written from scratch. It explains container failures from kernel state instead of an exit code, and drops in as a Docker runtime.</p>
-      <span class="m">1,570 kernel functions reached · runc 2,603</span>
-    </a>
-    <a href="https://github.com/MarStack-Labs/marstack-cloud">
-      <div class="top"><span class="lang">Go</span><span class="go">→</span></div>
-      <h3>marstack-cloud</h3>
-      <p>A cloud platform for bare metal that treats container, VM, microVM and sandbox as one resource type, with native routing and no encapsulation in the data path.</p>
-      <span class="m">QEMU · Cloud Hypervisor · Firecracker</span>
-    </a>
-    <a href="https://github.com/MarStack-Labs/marstack-secrets">
-      <div class="top"><span class="lang">Go</span><span class="go">→</span></div>
-      <h3>marstack-secrets</h3>
-      <p>A secret and parameter store that boots sealed. Envelope encryption bound to tenant, path and version, Shamir unsealing, default-deny policy, and an audit log it refuses to start without.</p>
-      <span class="m">Sealed by default</span>
-    </a>
-    <a href="https://github.com/MarStack-Labs/marstack-access">
-      <div class="top"><span class="lang">Go</span><span class="go">→</span></div>
-      <h3>marstack-access</h3>
-      <p>Identity-aware access for Linux infrastructure. No standing credentials, certificates that never reach the user, tamper-evident audit, and sessions you can grep.</p>
-      <span class="m">Agentless · short-lived certs</span>
-    </a>
-    <a href="https://github.com/umars28/xdp-lb">
-      <div class="top"><span class="lang">Rust + C</span><span class="go">→</span></div>
-      <h3>xdp-lb</h3>
-      <p>A layer 4 load balancer living on the XDP hook — C data path, Rust control plane, maglev consistent hashing so backends can come and go without reshuffling every flow.</p>
-      <span class="m">eBPF · below the network stack</span>
-    </a>
-    <a href="https://github.com/umars28/redis-ha-ansible">
-      <div class="top"><span class="lang">Ansible</span><span class="go">→</span></div>
-      <h3>redis-ha-ansible</h3>
-      <p>Redis Cluster and Sentinel high availability as code, with Molecule scenarios that kill a primary and assert the failover actually happened.</p>
-      <span class="m">Tested by real failover</span>
-    </a>
+  <div class="panel">
+    <ol class="xp">
+      <li>
+        <div class="when">
+          <span class="p">Oct — Dec 2025</span>
+          <span class="c">Frog Cloud</span>
+          <span class="l">Private cloud infrastructure</span>
+        </div>
+        <div>
+          <h3>Frogve orchestration platform <span class="gpa">Confidential</span></h3>
+          <ul class="stk"><li>Go</li><li>Echo</li><li>SQLite</li><li>QEMU/KVM</li><li>Cloud-Init</li><li>nftables</li><li>OpenVPN</li><li>Kea DHCP</li><li>WebSocket</li><li>Docker</li></ul>
+          <ul>
+            <li>Built a private cloud orchestration platform managing the full lifecycle of virtual machines, networking and storage.</li>
+            <li>Wrote a custom hypervisor manager in Go interfacing directly with QEMU/KVM, for bare-metal performance without heavy middleware.</li>
+            <li>Implemented a software-defined networking layer on nftables and Linux bridges, giving isolated VPCs with dynamic NAT, firewall rules and DHCP reservation.</li>
+            <li>Designed a multi-tenant project architecture with strict CPU, RAM and disk quotas, and role-based access control.</li>
+            <li>Integrated automated OpenVPN provisioning for secure access to private cloud resources by distributed teams.</li>
+            <li>Developed real-time monitoring and interactive VNC console access over WebSockets.</li>
+            <li>Automated provisioning with cloud-init for instant VM configuration and password management.</li>
+          </ul>
+        </div>
+      </li>
+      <li>
+        <div class="when">
+          <span class="p">Jul 2025 — Now</span>
+          <span class="c">Maxcloud</span>
+          <span class="l">Public cloud platform</span>
+        </div>
+        <div>
+          <h3>Public cloud management platform <a class="gpa gpa--l" href="https://maxcloud.id/">maxcloud.id ↗</a></h3>
+          <ul class="stk"><li>Laravel 10</li><li>PHP 8</li><li>MySQL</li><li>Redis</li><li>RabbitMQ</li><li>Laravel Reverb</li><li>Proxmox API</li><li>PowerDNS</li><li>Xendit</li><li>Duitku</li><li>Docker</li><li>Sentry</li><li>JWT</li></ul>
+          <ul>
+            <li>Built an end-to-end platform automating the provisioning and billing of virtual infrastructure.</li>
+            <li>High-performance REST API on Laravel 10 using a service-repository pattern and Laravel Actions for modular domain logic.</li>
+            <li>Engineered a node allocation algorithm optimising CPU and RAM placement across Proxmox clusters for balanced load and high availability.</li>
+            <li>Automated IPv6 provisioning via SLAAC and integrated PowerDNS for real-time domain management and load balancer configuration.</li>
+            <li>Designed a modular payment gateway abstraction able to hot-swap providers, handle callbacks and reconcile transactions automatically.</li>
+            <li>Built a reactive notification system on Redis atomic counters for precise usage tracking, plus a Telegram bot for instant alerts.</li>
+            <li>Secured access with JWT and Google 2FA, and wired Sentry for error tracking and performance monitoring.</li>
+          </ul>
+        </div>
+      </li>
+      <li>
+        <div class="when">
+          <span class="p">Jan 2026</span>
+          <span class="c">Pingve</span>
+          <span class="l">Distributed network monitoring</span>
+        </div>
+        <div>
+          <h3>Control plane / data plane monitoring <span class="gpa">Private</span></h3>
+          <ul class="stk"><li>Go</li><li>gRPC</li><li>Protocol Buffers</li><li>Next.js</li><li>TypeScript</li><li>PostgreSQL</li><li>Redis</li><li>Docker</li><li>Prometheus</li><li>GeoIP</li></ul>
+          <ul>
+            <li>Built a scalable distributed monitoring system with the control plane and data plane separated architecturally.</li>
+            <li>Backend in Go using gRPC and Protocol Buffers for efficient, type-safe communication between planes.</li>
+            <li>Implemented probe agents suitable for global deployment, running ICMP, TCP and HTTP latency checks.</li>
+            <li>Designed a real-time dashboard in Next.js and Tailwind to visualise network performance and probe status.</li>
+            <li>Integrated GeoIP to map probe distribution and provide location-aware network analytics.</li>
+            <li>Engineered probe authentication with JWT and token-based validation to protect network integrity.</li>
+            <li>Optimised for high concurrency and horizontal scalability with Docker and clean architecture patterns.</li>
+          </ul>
+        </div>
+      </li>
+      <li>
+        <div class="when">
+          <span class="p">Dec 2025</span>
+          <span class="c">OnMeeting</span>
+          <span class="l">PT Awan Data Indonesia</span>
+        </div>
+        <div>
+          <h3>Enterprise video conferencing <a class="gpa gpa--l" href="https://onmeeting.id">onmeeting.id ↗</a></h3>
+          <ul class="stk"><li>Go (Fiber)</li><li>PostgreSQL</li><li>Next.js 15</li><li>TailwindCSS</li><li>WebRTC</li><li>PlugNMeet</li><li>Docker</li><li>HAProxy</li><li>GitLab CI/CD</li></ul>
+          <ul>
+            <li>Developed a sovereign, enterprise-grade video conferencing platform for independent and secure digital communication.</li>
+            <li>Backend in Go (Fiber) and PostgreSQL delivering a REST API for JWT authentication and meeting orchestration.</li>
+            <li>Frontend in Next.js 15 and TailwindCSS, responsive, with Framer Motion and AOS for interaction.</li>
+            <li>Integrated PlugNMeet over WebRTC for HD video and audio, screen sharing, real-time chat and a multi-user whiteboard.</li>
+            <li>Implemented RTMP multi-broadcasting for live streaming and cloud recording management from the admin dashboard.</li>
+            <li>Orchestrated deployment on VPS with Docker and HAProxy for load balancing, SSL termination and high availability.</li>
+          </ul>
+        </div>
+      </li>
+      <li>
+        <div class="when">
+          <span class="p">May — Jun 2025</span>
+          <span class="c">Job Board Platform</span>
+          <span class="l">Three services</span>
+        </div>
+        <div>
+          <h3>Job board with search and real-time chat <a class="gpa gpa--l" href="https://github.com/umars28/job-board">GitHub ↗</a></h3>
+          <ul class="stk"><li>Spring Boot</li><li>MySQL</li><li>Thymeleaf</li><li>Elasticsearch</li><li>ELK</li><li>RabbitMQ</li><li>WebSocket</li><li>Prometheus</li><li>Grafana</li></ul>
+          <ul>
+            <li>Built a job board platform serving employers and job seekers.</li>
+            <li>Backend on Spring Boot and MySQL, with a server-side rendered frontend in Thymeleaf.</li>
+            <li>Implemented full-text search with Elasticsearch and audit logging through the ELK stack.</li>
+            <li>Separated the notification service behind RabbitMQ for asynchronous delivery, with REST APIs for notification management.</li>
+            <li>Added real-time chat as a separate WebSocket service connecting job seekers and companies.</li>
+            <li>Wired Prometheus and Grafana to visualise service performance and availability.</li>
+            <li>Supported role-based access for admin, company and job seeker, plus job posting and application tracking.</li>
+          </ul>
+        </div>
+      </li>
+      <li>
+        <div class="when">
+          <span class="p">Jun 2025</span>
+          <span class="c">Sync vs async benchmark</span>
+          <span class="l">Spring Boot execution strategies</span>
+        </div>
+        <div>
+          <h3>Benchmarking execution strategies <a class="gpa gpa--l" href="https://github.com/umars28/spring-sync-vs-async-benchmark">GitHub ↗</a></h3>
+          <ul class="stk"><li>Spring Boot</li><li>RabbitMQ</li><li>Kafka</li><li>Redis Pub/Sub</li><li>Apache Benchmark</li><li>Bash</li></ul>
+          <ul>
+            <li>Ran a benchmarking study on the performance trade-offs between synchronous and asynchronous execution in Spring Boot.</li>
+            <li>Compared traditional blocking request handling against <code>@Async</code> with both SimpleAsyncTaskExecutor and ThreadPoolTaskExecutor.</li>
+            <li>Compared message-based asynchronous processing across RabbitMQ, Kafka and Redis Pub/Sub.</li>
+            <li>Used Apache Benchmark and Bash to simulate concurrency and measure throughput, latency and scalability under increasing load.</li>
+            <li>Analysed and visualised the results to identify which strategy fits which requirement — high throughput against low latency.</li>
+            <li>Produced recommendations for choosing an execution model in real-world Spring Boot applications.</li>
+          </ul>
+        </div>
+      </li>
+    </ol>
+  </div>
+
+  <div class="arch">
+    <span class="micro">Earlier work</span>
+    <ol>
+      <li><span class="y">2025</span><b>Personal Finance Tracker</b><span class="s">Laravel · PostgreSQL · Redis · Docker · Swagger · PHPUnit</span><a href="https://github.com/umars28/personal-finance-tracker">GitHub ↗</a></li>
+      <li><span class="y">2024 — 2025</span><b>Student Management Information System</b><span class="s">Laravel · MySQL · Redis · Bootstrap · jQuery</span><span class="s s--q">Private</span></li>
+      <li><span class="y">2024 — 2025</span><b>Inventory Management System</b><span class="s">Laravel · MySQL · Python · Bootstrap · jQuery</span><span class="s s--q">Private</span></li>
+      <li><span class="y">2024</span><b>Ship Management Information System</b><span class="s">Laravel · PHP · MySQL · Bootstrap · jQuery</span><span class="s s--q">Private</span></li>
+      <li><span class="y">2023 — 2024</span><b>Salt Production Tracking, GaramQu</b><span class="s">Laravel · MySQL · ReactJS · REST API</span><span class="s s--q">Private</span></li>
+      <li><span class="y">2021</span><b>Academic Management System (SIAKAD)</b><span class="s">Go · MySQL · Bootstrap</span><a href="https://github.com/umars28/academic-information-system">GitHub ↗</a></li>
+      <li><span class="y">2020</span><b>Laundry Management System</b><span class="s">Laravel · MySQL · jQuery · Bootstrap</span><span class="s s--q">Private</span></li>
+      <li><span class="y">2020</span><b>Company Profile Management System</b><span class="s">Laravel · MySQL · jQuery · Bootstrap</span><span class="s s--q">Private</span></li>
+      <li><span class="y">2020</span><b>Blog Management System</b><span class="s">Laravel · MySQL · jQuery · Bootstrap</span><span class="s s--q">Private</span></li>
+      <li><span class="y">2020</span><b>Learning Management System, IDEOO Academy</b><span class="s">Laravel · PHP · MySQL · Bootstrap · jQuery</span><span class="s s--q">Private</span></li>
+    </ol>
   </div>
 </div></section>
 
